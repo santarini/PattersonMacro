@@ -11,11 +11,14 @@ Set PMOrng = Sheets("PMO Support").Range("A1")
 'Sheets.Add.Name = "Training"
 'Sheets.Add.Name = "Federal Health"
 'Sheets.Add.Name = "CBRNE"
-'Sheets.Add.Name = "Inst Mission Spt"
+Sheets.Add.Name = "Inst Mission Spt"
 Set IMSrng = Sheets("Inst Mission Spt").Range("A1")
 Sheets.Add.Name = "Asset Mgmt"
 Set AMrng = Sheets("Asset Mgmt").Range("A1")
 
+'Identify aggregate opportunity list
+
+Sheets("OpportunityDetails").Activate
 
 'find cell containing "Title"
     Cells.Find(What:="Title", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Offset(1, 0).Select
@@ -28,12 +31,12 @@ MsgBox cellCount
 
 
 
-Sheets("OpportunityDetails").Activate
+
 
 For Each cell In titleRng
 'sort for PMO
     If InStr(1, cell.Value, "PMO -") > 0 Then
-        MsgBox cell.Value
+        'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
@@ -48,7 +51,7 @@ For Each cell In titleRng
     
 'sort for IMS
     If InStr(1, cell.Value, "IMS -") > 0 Then
-        MsgBox cell.Value
+        'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
@@ -63,7 +66,7 @@ For Each cell In titleRng
 
 'sort for AM
     If InStr(1, cell.Value, "AM -") > 0 Then
-        MsgBox cell.Value
+        'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
