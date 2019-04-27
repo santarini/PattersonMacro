@@ -15,7 +15,8 @@ Sheets.Add.Name = "Cyber-Intel"
 Set ITrng = Sheets("Cyber-Intel").Range("A1")
 Sheets.Add.Name = "Training"
 Set TRAINrng = Sheets("Training").Range("A1")
-'Sheets.Add.Name = "Federal Health"
+Sheets.Add.Name = "Federal Health"
+Set HEALTHrng = Sheets("Training").Range("A1")
 Sheets.Add.Name = "CBRNE"
 Set IMSrng = Sheets("CBRNE").Range("A1")
 Sheets.Add.Name = "Inst Mission Spt"
@@ -57,7 +58,7 @@ For Each cell In titleRng
     End If
     
 'sort for IT Cyber
-    If InStr(1, cell.Value, "IT_Cyber -") > 0 Then
+    If InStr(1, cell.Value, "Health Svs - ") > 0 Then
         'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
@@ -72,18 +73,18 @@ For Each cell In titleRng
     End If
     
 'sort for Training
-    If InStr(1, cell.Value, "IT_Cyber -") > 0 Then
+    If InStr(1, cell.Value, "Training -") > 0 Then
         'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
         Range(Selection, Selection.End(xlToRight)).Select
         Selection.Copy
-        Sheets("Cyber-Intel").Activate
-        ITrng.Select
+        Sheets("Training").Activate
+        TRAINrng.Select
         ActiveSheet.Paste
-        ITrng.Offset(1, 0).Select
-        Set ITrng = Selection
+        TRAINrng.Offset(1, 0).Select
+        Set TRAINrng = Selection
     End If
 
 'sort for EM
@@ -134,7 +135,7 @@ For Each cell In titleRng
 Next cell
 
 SecondsElapsed = Round(Timer - StartTime, 2)
-MsgBox cellCount & "data points successfully sorted in " & SecondsElapsed & " seconds", vbInformation
+MsgBox cellCount & " data points successfully sorted in " & SecondsElapsed & " seconds", vbInformation
 
 
 End Sub
