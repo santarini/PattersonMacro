@@ -3,6 +3,10 @@ Sub PattersonSort()
 Dim cell, titleRng As Range
 Dim PMOrng, ITrng, TRAINrng, EMrng, IMSrng, AMrng As Range
 
+Dim StartTime As Double
+Dim SecondsElapsed As Double
+StartTime = Timer
+
 'create tabs
 
 Sheets.Add.Name = "PMO Support"
@@ -30,7 +34,7 @@ Range(Selection, Selection.End(xlDown)).Select
 cellCount = Selection.Rows.Count
 Set titleRng = Selection
 
-MsgBox cellCount
+'MsgBox cellCount
 
 
 
@@ -129,11 +133,8 @@ For Each cell In titleRng
 
 Next cell
 
-'if row contains pharse
-'select entire row
-'copy row
-'go to tab
-'paste row in tab
+SecondsElapsed = Round(Timer - StartTime, 2)
+MsgBox cellCount & "data points successfully sorted in " & SecondsElapsed & " seconds", vbInformation
 
 
 End Sub
