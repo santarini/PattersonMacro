@@ -77,6 +77,7 @@ Set titleRng = Selection
 
 'MsgBox cellCount
 
+i = 0
 For Each cell In titleRng
 'sort for PMO
     If InStr(1, cell.Value, "PMO -") > 0 Then
@@ -91,6 +92,7 @@ For Each cell In titleRng
         ActiveSheet.Paste
         PMOrng.Offset(1, 0).Select
         Set PMOrng = Selection
+        i = i + 1
     End If
     
     
@@ -107,6 +109,7 @@ For Each cell In titleRng
         ActiveSheet.Paste
         CYBERrng.Offset(1, 0).Select
         Set CYBERrng = Selection
+        i = i + 1
     End If
     
 'sort for Training
@@ -122,6 +125,7 @@ For Each cell In titleRng
         ActiveSheet.Paste
         TRAINrng.Offset(1, 0).Select
         Set TRAINrng = Selection
+        i = i + 1
     End If
     
 'sort for Health SVS
@@ -137,6 +141,7 @@ For Each cell In titleRng
         ActiveSheet.Paste
         HEALTHrng.Offset(1, 0).Select
         Set HEALTHrng = Selection
+        i = i + 1
     End If
 
 'sort for EM
@@ -152,6 +157,7 @@ For Each cell In titleRng
         ActiveSheet.Paste
         EMrng.Offset(1, 0).Select
         Set EMrng = Selection
+        i = i + 1
     End If
     
 'sort for IMS
@@ -167,6 +173,7 @@ For Each cell In titleRng
         ActiveSheet.Paste
         IMSrng.Offset(1, 0).Select
         Set IMSrng = Selection
+        i = i + 1
     End If
 
 'sort for AM
@@ -182,11 +189,12 @@ For Each cell In titleRng
         ActiveSheet.Paste
         AMrng.Offset(1, 0).Select
         Set AMrng = Selection
+        i = i + 1
     End If
 
 Next cell
 
 SecondsElapsed = Round(Timer - StartTime, 2)
-MsgBox cellCount & " data points successfully sorted in " & SecondsElapsed & " seconds", vbInformation
+MsgBox i & " data points successfully sorted from " & cellCount & " in " & SecondsElapsed & " seconds", vbInformation
 
 End Sub
