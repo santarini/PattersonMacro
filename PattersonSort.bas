@@ -194,6 +194,34 @@ For Each cell In titleRng
 
 Next cell
 
+'clean up
+
+Sheets("PMO Support").Activate
+Range("A1").Select
+
+Sheets("Cyber-Intel").Activate
+Range("A1").Select
+
+Sheets("Training").Activate
+Range("A1").Select
+
+Sheets("Federal Health").Activate
+Range("A1").Select
+
+Sheets("CBRNE").Activate
+Range("A1").Select
+
+Sheets("Inst Mission Spt").Activate
+Range("A1").Select
+
+Sheets("Asset Mgmt").Activate
+Range("A1").Select
+
+Sheets("OpportunityDetails").Activate
+Range("A1").Select
+
+'present summary statistics
+
 SecondsElapsed = Round(Timer - StartTime, 2)
 MsgBox i & " data points successfully sorted from " & cellCount & " in " & SecondsElapsed & " seconds", vbInformation
 
