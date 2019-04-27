@@ -7,7 +7,9 @@ Dim PMOrng, EMrng, IMSrng, AMrng As Range
 
 Sheets.Add.Name = "PMO Support"
 Set PMOrng = Sheets("PMO Support").Range("A1")
-'Sheets.Add.Name = "Cyber-Intel"
+Sheets.Add.Name = "Cyber-Intel"
+Set ITrng = Sheets("Cyber-Intel").Range("A1")
+
 'Sheets.Add.Name = "Training"
 'Sheets.Add.Name = "Federal Health"
 Sheets.Add.Name = "CBRNE"
@@ -63,6 +65,21 @@ For Each cell In titleRng
         ActiveSheet.Paste
         EMrng.Offset(1, 0).Select
         Set EMrng = Selection
+    End If
+    
+'sort for EM
+    If InStr(1, cell.Value, "IT_Cyber -") > 0 Then
+        'MsgBox cell.Value
+        Sheets("OpportunityDetails").Activate
+        cell.Select
+        Selection.End(xlToLeft).Select
+        Range(Selection, Selection.End(xlToRight)).Select
+        Selection.Copy
+        Sheets("Cyber-Intel").Activate
+        ITrng.Select
+        ActiveSheet.Paste
+        ITrng.Offset(1, 0).Select
+        Set ITrng = Selection
     End If
 
 'sort for IMS
