@@ -1,7 +1,7 @@
 Sub PattersonSort()
 
 Dim cell, titleRng As Range
-Dim PMOrng, IMSrng, AMrng As Range
+Dim PMOrng, EMrng, IMSrng, AMrng As Range
 
 'create tabs
 
@@ -10,7 +10,8 @@ Set PMOrng = Sheets("PMO Support").Range("A1")
 'Sheets.Add.Name = "Cyber-Intel"
 'Sheets.Add.Name = "Training"
 'Sheets.Add.Name = "Federal Health"
-'Sheets.Add.Name = "CBRNE"
+Sheets.Add.Name = "CBRNE"
+Set IMSrng = Sheets("CBRNE").Range("A1")
 Sheets.Add.Name = "Inst Mission Spt"
 Set IMSrng = Sheets("Inst Mission Spt").Range("A1")
 Sheets.Add.Name = "Asset Mgmt"
@@ -49,6 +50,21 @@ For Each cell In titleRng
         Set PMOrng = Selection
     End If
     
+'sort for EM
+    If InStr(1, cell.Value, "EM-CBRNE -") > 0 Then
+        'MsgBox cell.Value
+        Sheets("OpportunityDetails").Activate
+        cell.Select
+        Selection.End(xlToLeft).Select
+        Range(Selection, Selection.End(xlToRight)).Select
+        Selection.Copy
+        Sheets("CBRNE").Activate
+        EMrng.Select
+        ActiveSheet.Paste
+        EMrng.Offset(1, 0).Select
+        Set EMrng = Selection
+    End If
+
 'sort for IMS
     If InStr(1, cell.Value, "IMS -") > 0 Then
         'MsgBox cell.Value
