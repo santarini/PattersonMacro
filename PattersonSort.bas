@@ -1,7 +1,7 @@
 Sub PattersonSort()
 
 Dim cell, titleRng As Range
-Dim PMOrng, ITrng, TRAINrng, EMrng, IMSrng, AMrng As Range
+Dim PMOrng, CYBERrng, TRAINrng, HEALTHrng, EMrng, IMSrng, AMrng As Range
 
 Dim StartTime As Double
 Dim SecondsElapsed As Double
@@ -11,16 +11,22 @@ StartTime = Timer
 
 Sheets.Add.Name = "PMO Support"
 Set PMOrng = Sheets("PMO Support").Range("A1")
+
 Sheets.Add.Name = "Cyber-Intel"
-Set ITrng = Sheets("Cyber-Intel").Range("A1")
+Set CYBERrng = Sheets("Cyber-Intel").Range("A1")
+
 Sheets.Add.Name = "Training"
 Set TRAINrng = Sheets("Training").Range("A1")
+
 Sheets.Add.Name = "Federal Health"
-Set HEALTHrng = Sheets("Training").Range("A1")
+Set HEALTHrng = Sheets("Federal Health").Range("A1")
+
 Sheets.Add.Name = "CBRNE"
-Set IMSrng = Sheets("CBRNE").Range("A1")
+Set EMrng = Sheets("CBRNE").Range("A1")
+
 Sheets.Add.Name = "Inst Mission Spt"
 Set IMSrng = Sheets("Inst Mission Spt").Range("A1")
+
 Sheets.Add.Name = "Asset Mgmt"
 Set AMrng = Sheets("Asset Mgmt").Range("A1")
 
@@ -57,8 +63,9 @@ For Each cell In titleRng
         Set PMOrng = Selection
     End If
     
-'sort for IT Cyber
-    If InStr(1, cell.Value, "Health Svs - ") > 0 Then
+    
+'sort for Cyber
+    If InStr(1, cell.Value, "IT_Cyber - ") > 0 Then
         'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
@@ -66,14 +73,14 @@ For Each cell In titleRng
         Range(Selection, Selection.End(xlToRight)).Select
         Selection.Copy
         Sheets("Cyber-Intel").Activate
-        ITrng.Select
+        CYBERrng.Select
         ActiveSheet.Paste
-        ITrng.Offset(1, 0).Select
-        Set ITrng = Selection
+        CYBERrng.Offset(1, 0).Select
+        Set CYBERrng = Selection
     End If
     
 'sort for Training
-    If InStr(1, cell.Value, "Training -") > 0 Then
+    If InStr(1, cell.Value, "Training - ") > 0 Then
         'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
@@ -86,20 +93,35 @@ For Each cell In titleRng
         TRAINrng.Offset(1, 0).Select
         Set TRAINrng = Selection
     End If
-
-'sort for EM
-    If InStr(1, cell.Value, "Training -") > 0 Then
+    
+'sort for Health SVS
+    If InStr(1, cell.Value, "Health Svs - ") > 0 Then
         'MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
         Range(Selection, Selection.End(xlToRight)).Select
         Selection.Copy
-        Sheets("Training").Activate
-        TRAINrng.Select
+        Sheets("Federal Health").Activate
+        HEALTHrng.Select
         ActiveSheet.Paste
-        TRAINrng.Offset(1, 0).Select
-        Set TRAINrng = Selection
+        HEALTHrng.Offset(1, 0).Select
+        Set HEALTHrng = Selection
+    End If
+
+'sort for EM
+    If InStr(1, cell.Value, "EM-CBRNE -") > 0 Then
+        'MsgBox cell.Value
+        Sheets("OpportunityDetails").Activate
+        cell.Select
+        Selection.End(xlToLeft).Select
+        Range(Selection, Selection.End(xlToRight)).Select
+        Selection.Copy
+        Sheets("CBRNE").Activate
+        EMrng.Select
+        ActiveSheet.Paste
+        EMrng.Offset(1, 0).Select
+        Set EMrng = Selection
     End If
     
 'sort for IMS
@@ -136,6 +158,5 @@ Next cell
 
 SecondsElapsed = Round(Timer - StartTime, 2)
 MsgBox cellCount & " data points successfully sorted in " & SecondsElapsed & " seconds", vbInformation
-
 
 End Sub
