@@ -1,7 +1,6 @@
 Sub PattersonSort()
 
-''
-'
+' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ '
 ' (c) Makoa Santarini - https://github.com/santarini/PattersonMacro
 '
 ' (c) DAWSON Companies
@@ -189,6 +188,5 @@ Next cell
 
 SecondsElapsed = Round(Timer - StartTime, 2)
 MsgBox cellCount & " data points successfully sorted in " & SecondsElapsed & " seconds", vbInformation
-
 
 End Sub
