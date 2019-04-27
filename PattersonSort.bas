@@ -1,10 +1,20 @@
 Sub PattersonSort()
 
 Dim cell, titleRng As Range
-Dim AMrng
+Dim PMOrng, IMSrng, AMrng As Range
 
+'create tabs
 
-
+Sheets.Add.Name = "PMO Support"
+Set PMOrng = Sheets("PMO Support").Range("A1")
+'Sheets.Add.Name = "Cyber-Intel"
+'Sheets.Add.Name = "Training"
+'Sheets.Add.Name = "Federal Health"
+'Sheets.Add.Name = "CBRNE"
+'Sheets.Add.Name = "Inst Mission Spt"
+Set IMSrng = Sheets("Inst Mission Spt").Range("A1")
+Sheets.Add.Name = "Asset Mgmt"
+Set AMrng = Sheets("Asset Mgmt").Range("A1")
 
 
 'find cell containing "Title"
@@ -16,20 +26,42 @@ Set titleRng = Selection
 
 MsgBox cellCount
 
-'create tabs
-'Sheets.Add.Name = "PMO Support"
-'Sheets.Add.Name = "Cyber-Intel"
-'Sheets.Add.Name = "Training"
-'Sheets.Add.Name = "Federal Health"
-'Sheets.Add.Name = "CBRNE"
-'Sheets.Add.Name = "Inst Mission Spt"
-Sheets.Add.Name = "Asset Mgmt"
-Set AMrng = Sheets("Asset Mgmt").Range("A1")
+
 
 Sheets("OpportunityDetails").Activate
 
 For Each cell In titleRng
+'sort for PMO
+    If InStr(1, cell.Value, "PMO -") > 0 Then
+        MsgBox cell.Value
+        Sheets("OpportunityDetails").Activate
+        cell.Select
+        Selection.End(xlToLeft).Select
+        Range(Selection, Selection.End(xlToRight)).Select
+        Selection.Copy
+        Sheets("PMO Support").Activate
+        PMOrng.Select
+        ActiveSheet.Paste
+        PMOrng.Offset(1, 0).Select
+        Set PMOrng = Selection
+    End If
+    
+'sort for IMS
+    If InStr(1, cell.Value, "IMS -") > 0 Then
+        MsgBox cell.Value
+        Sheets("OpportunityDetails").Activate
+        cell.Select
+        Selection.End(xlToLeft).Select
+        Range(Selection, Selection.End(xlToRight)).Select
+        Selection.Copy
+        Sheets("Inst Mission Spt").Activate
+        IMSrng.Select
+        ActiveSheet.Paste
+        IMSrng.Offset(1, 0).Select
+        Set IMSrng = Selection
+    End If
 
+'sort for AM
     If InStr(1, cell.Value, "AM -") > 0 Then
         MsgBox cell.Value
         Sheets("OpportunityDetails").Activate
@@ -41,8 +73,9 @@ For Each cell In titleRng
         AMrng.Select
         ActiveSheet.Paste
         AMrng.Offset(1, 0).Select
-        AMrng = Selection
+        Set AMrng = Selection
     End If
+
 Next cell
 
 'if row contains pharse
