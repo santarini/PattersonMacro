@@ -41,28 +41,48 @@ Dim StartTime As Double
 Dim SecondsElapsed As Double
 StartTime = Timer
 
+'copy main header
+Sheets("OpportunityDetails").Activate
+Range("A1").Select
+Range(Selection, Selection.End(xlToRight)).Select
+Selection.Copy
+
 'create tabs
 
 Sheets.Add.Name = "PMO Support"
 Set PMOrng = Sheets("PMO Support").Range("A1")
+ActiveSheet.Paste
+Set PMOrng = Sheets("PMO Support").Range("A2")
 
 Sheets.Add.Name = "Cyber-Intel"
 Set CYBERrng = Sheets("Cyber-Intel").Range("A1")
+ActiveSheet.Paste
+Set CYBERrng = Sheets("Cyber-Intel").Range("A2")
 
 Sheets.Add.Name = "Training"
 Set TRAINrng = Sheets("Training").Range("A1")
+ActiveSheet.Paste
+Set TRAINrng = Sheets("Training").Range("A2")
 
 Sheets.Add.Name = "Federal Health"
 Set HEALTHrng = Sheets("Federal Health").Range("A1")
+ActiveSheet.Paste
+Set HEALTHrng = Sheets("Federal Health").Range("A2")
 
 Sheets.Add.Name = "CBRNE"
 Set EMrng = Sheets("CBRNE").Range("A1")
+ActiveSheet.Paste
+Set EMrng = Sheets("CBRNE").Range("A2")
 
 Sheets.Add.Name = "Inst Mission Spt"
 Set IMSrng = Sheets("Inst Mission Spt").Range("A1")
+ActiveSheet.Paste
+Set IMSrng = Sheets("Inst Mission Spt").Range("A2")
 
 Sheets.Add.Name = "Asset Mgmt"
 Set AMrng = Sheets("Asset Mgmt").Range("A1")
+ActiveSheet.Paste
+Set AMrng = Sheets("Asset Mgmt").Range("A2")
 
 'Identify aggregate opportunity list
 Sheets("OpportunityDetails").Activate
@@ -74,8 +94,6 @@ Cells.Find(What:="Title", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole
 Range(Selection, Selection.End(xlDown)).Select
 cellCount = Selection.Rows.Count
 Set titleRng = Selection
-
-'MsgBox cellCount
 
 i = 0
 For Each cell In titleRng
