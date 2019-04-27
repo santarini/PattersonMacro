@@ -65,11 +65,11 @@ Sheets.Add.Name = "Asset Mgmt"
 Set AMrng = Sheets("Asset Mgmt").Range("A1")
 
 'Identify aggregate opportunity list
-
 Sheets("OpportunityDetails").Activate
 
 'find cell containing "Title"
-    Cells.Find(What:="Title", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Offset(1, 0).Select
+Cells.Find(What:="Title", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Offset(1, 0).Select
+
 'select all rows in Title column
 Range(Selection, Selection.End(xlDown)).Select
 cellCount = Selection.Rows.Count
@@ -219,6 +219,7 @@ Range("A1").Select
 
 Sheets("OpportunityDetails").Activate
 Range("A1").Select
+ActiveSheet.Move Before:=ActiveWorkbook.Sheets(1)
 
 'present summary statistics
 
