@@ -1,4 +1,4 @@
-Sub PattersonSort()
+Sub CatSort()
 
 ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ '
 ' (c) Makoa Santarini - https://github.com/santarini/PattersonMacro
