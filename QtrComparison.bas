@@ -1,11 +1,12 @@
 Sub QtrComparison()
 Dim workingSourcePage, workingResultPage As Worksheet
 Dim source_rng, AM_qtr_rng As Range
-Dim year As String
+Dim testStr, year, monthRaw, month, qtr As String
+Dim monthInt As Integer
 
 
 'navigate to to main page
-Set workingSourcePage = Sheets("Asset Mgmt")
+Set workingSourcePage = ActiveSheet
 workingSourcePage.Activate
 
 'define first cell in main page
@@ -17,17 +18,17 @@ Range(Selection, Selection.End(xlToRight)).Select
 Selection.Copy
 
 'create new sub work space
-Sheets.Add.Name = "Asset Mgmt Qtr"
-Set workingResultPage = Sheets("Asset Mgmt Qtr")
+Sheets.Add.Name = workingSourcePage.Name & " Qtr"
+Set workingResultPage = Sheets(workingSourcePage.Name & " Qtr")
 
 'define first cell in work space
-Set result_rng = Sheets("Asset Mgmt Qtr").Range("A1")
+Set result_rng = workingResultPage.Range("A1")
 result_rng.Select
 
 'paste header
 ActiveSheet.Paste
 'offset rng
-Set result_rng = Sheets("Asset Mgmt Qtr").Range("A2")
+Set result_rng = workingResultPage.Range("A2")
 result_rng.Select
 
 'navigate to to main page
@@ -72,6 +73,20 @@ For Each cell In titleRng
     End If
 'sort for Proposal in Progress
     If InStr(1, cell.Value, "Proposal In Progress") > 0 Then
+        workingSourcePage.Activate
+        cell.Select
+        Selection.End(xlToLeft).Select
+        Range(Selection, Selection.End(xlToRight)).Select
+        Selection.Copy
+        workingResultPage.Activate
+        result_rng.Select
+        ActiveSheet.Paste
+        result_rng.Offset(1, 0).Select
+        Set result_rng = Selection
+        i = i + 1
+    End If
+'sort for Proposal Submitted
+    If InStr(1, cell.Value, "Proposal Submitted") > 0 Then
         workingSourcePage.Activate
         cell.Select
         Selection.End(xlToLeft).Select
@@ -151,8 +166,8 @@ Set titleRng = Selection
 'sort data
 Range("A1").Select
 Columns("A:A").Select
-ActiveWorkbook.Worksheets("Asset Mgmt Qtr").Sort.SortFields.Clear
-ActiveWorkbook.Worksheets("Asset Mgmt Qtr").Sort.SortFields.Add2 Key:=Range( _
+workingSourcePage.Sort.SortFields.Clear
+workingSourcePage.Sort.SortFields.Add2 Key:=Range( _
     "A2:A26"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
     xlSortNormal
 With ActiveWorkbook.Worksheets("Asset Mgmt Qtr").Sort
@@ -169,9 +184,34 @@ Range("A1").Select
 For Each cell In titleRng
 'sort for Closed Won
     If InStr(1, cell.Value, "Closed Won") > 0 Then
-    'take the f value
-    'figure out the year and qtr
-    'populate H and I accordingly
+        If IsEmpty(cell.Offset(0, 5)) = True Then
+            GoTo BlankCellError
+        Else
+            dateStr = cell.Offset(0, 5).Value
+            
+            year = Left(dateStr, InStr(dateStr, "/") - 1)
+            monthRaw = Left(dateStr, InStr(dateStr, "/") + 2)
+            month = Right(monthRaw, Len(monthRaw) - 5)
+            
+            monthInt = CInt(month)
+            
+            If 1 <= monthInt And monthInt <= 3 Then
+            qtr = 1
+            End If
+            If 4 <= monthInt And monthInt <= 6 Then
+            qtr = 2
+            End If
+            If 7 <= monthInt And monthInt <= 9 Then
+            qtr = 3
+            End If
+            If 10 <= monthInt And monthInt <= 12 Then
+            qtr = 4
+            End If
+        End If
+    cell.Offset(0, 7).Value = year
+    cell.Offset(0, 8).Value = qtr
+    cell.Offset(0, 9).Value = "Actual"
+BlankCellError:
     End If
 'sort for Pipeline Opportunity
     If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
@@ -191,7 +231,13 @@ For Each cell In titleRng
     End If
 Next cell
 
-
+'Delete
+Columns("B:C").Select
+Selection.Delete Shift:=xlToLeft
+Range("A1").Select
+Columns("D:D").Select
+Selection.Delete Shift:=xlToLeft
+Range("A1").Select
 
 'format cells
 Cells.Select
@@ -201,3 +247,5 @@ Cells.EntireColumn.AutoFit
 Range("A1").Select
 
 End Sub
+
+
