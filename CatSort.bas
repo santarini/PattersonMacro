@@ -103,8 +103,7 @@ For Each cell In titleRng
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
-        Range(Selection, Selection.End(xlToRight)).Select
-        Selection.Copy
+        ActiveCell.Resize(1, 70).Copy
         Sheets("PMO Support").Activate
         PMOrng.Select
         ActiveSheet.Paste
@@ -120,8 +119,7 @@ For Each cell In titleRng
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
-        Range(Selection, Selection.End(xlToRight)).Select
-        Selection.Copy
+        ActiveCell.Resize(1, 70).Copy
         Sheets("Cyber-Intel").Activate
         CYBERrng.Select
         ActiveSheet.Paste
@@ -136,8 +134,7 @@ For Each cell In titleRng
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
-        Range(Selection, Selection.End(xlToRight)).Select
-        Selection.Copy
+        ActiveCell.Resize(1, 70).Copy
         Sheets("Training").Activate
         TRAINrng.Select
         ActiveSheet.Paste
@@ -152,8 +149,7 @@ For Each cell In titleRng
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
-        Range(Selection, Selection.End(xlToRight)).Select
-        Selection.Copy
+        ActiveCell.Resize(1, 70).Copy
         Sheets("Federal Health").Activate
         HEALTHrng.Select
         ActiveSheet.Paste
@@ -168,8 +164,7 @@ For Each cell In titleRng
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
-        Range(Selection, Selection.End(xlToRight)).Select
-        Selection.Copy
+        ActiveCell.Resize(1, 70).Copy
         Sheets("CBRNE").Activate
         EMrng.Select
         ActiveSheet.Paste
@@ -184,8 +179,7 @@ For Each cell In titleRng
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
-        Range(Selection, Selection.End(xlToRight)).Select
-        Selection.Copy
+        ActiveCell.Resize(1, 70).Copy
         Sheets("Inst Mission Spt").Activate
         IMSrng.Select
         ActiveSheet.Paste
@@ -200,8 +194,7 @@ For Each cell In titleRng
         Sheets("OpportunityDetails").Activate
         cell.Select
         Selection.End(xlToLeft).Select
-        Range(Selection, Selection.End(xlToRight)).Select
-        Selection.Copy
+        ActiveCell.Resize(1, 70).Copy
         Sheets("Asset Mgmt").Activate
         AMrng.Select
         ActiveSheet.Paste
@@ -245,3 +238,4 @@ SecondsElapsed = Round(Timer - StartTime, 2)
 MsgBox i & " data points successfully sorted from " & cellCount & " in " & SecondsElapsed & " seconds", vbInformation
 
 End Sub
+
