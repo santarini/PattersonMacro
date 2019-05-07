@@ -1,6 +1,8 @@
 Sub QtrComparison()
 Dim workingSourcePage, workingResultPage As Worksheet
 Dim source_rng, AM_qtr_rng As Range
+Dim year As String
+
 
 'navigate to to main page
 Set workingSourcePage = Sheets("Asset Mgmt")
@@ -162,6 +164,32 @@ With ActiveWorkbook.Worksheets("Asset Mgmt Qtr").Sort
     .Apply
 End With
 Range("A1").Select
+
+'filter
+For Each cell In titleRng
+'sort for Closed Won
+    If InStr(1, cell.Value, "Closed Won") > 0 Then
+    'take the f value
+    'figure out the year and qtr
+    'populate H and I accordingly
+    End If
+'sort for Pipeline Opportunity
+    If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
+    year = cell.Offset(0, 1).Value
+    qtr = cell.Offset(0, 2).Value
+    cell.Offset(0, 7).Value = year
+    cell.Offset(0, 8).Value = qtr
+    cell.Offset(0, 9).Value = "Projected"
+    End If
+'sort for Proposal in Progress
+    If InStr(1, cell.Value, "Proposal In Progress") > 0 Then
+    year = cell.Offset(0, 1).Value
+    qtr = cell.Offset(0, 2).Value
+    cell.Offset(0, 7).Value = year
+    cell.Offset(0, 8).Value = qtr
+    cell.Offset(0, 9).Value = "Projected"
+    End If
+Next cell
 
 
 
