@@ -96,14 +96,14 @@ Selection.Delete Shift:=xlToLeft
 Range("A1").Select
 
 'delete from C to Q
-Columns("B:C").Select
+Columns("C:Q").Select
 Application.CutCopyMode = False
 Selection.Delete Shift:=xlToLeft
 
 Range("A1").Select
 
 'delete from E to V
-Columns("B:C").Select
+Columns("E:V").Select
 Application.CutCopyMode = False
 Selection.Delete Shift:=xlToLeft
 
@@ -129,6 +129,46 @@ Columns("K:M").Select
 Selection.Cut
 Range("D1").Select
 Selection.Insert Shift:=xlToRight
+
+Range("A1").Select
+
+'delete H to P
+Columns("H:P").Select
+Selection.Delete Shift:=xlToLeft
+
+'Add columns
+Range("H1").Value = "Useable Year"
+Range("I1").Value = "Useable Qtr"
+Range("J1").Value = "Proj/Actual"
+
+'define working range
+Range(Selection, Selection.End(xlDown)).Select
+cellCount = Selection.Rows.Count
+Set titleRng = Selection
+
+'sort data
+Range("A1").Select
+Columns("A:A").Select
+ActiveWorkbook.Worksheets("Asset Mgmt Qtr").Sort.SortFields.Clear
+ActiveWorkbook.Worksheets("Asset Mgmt Qtr").Sort.SortFields.Add2 Key:=Range( _
+    "A2:A26"), SortOn:=xlSortOnValues, Order:=xlAscending, DataOption:= _
+    xlSortNormal
+With ActiveWorkbook.Worksheets("Asset Mgmt Qtr").Sort
+    .SetRange Range("A1:G26")
+    .Header = xlYes
+    .MatchCase = False
+    .Orientation = xlTopToBottom
+    .SortMethod = xlPinYin
+    .Apply
+End With
+Range("A1").Select
+
+
+
+'format cells
+Cells.Select
+Range("Q19").Activate
+Cells.EntireColumn.AutoFit
 
 Range("A1").Select
 
