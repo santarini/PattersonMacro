@@ -83,17 +83,53 @@ For Each cell In titleRng
         i = i + 1
     End If
 Next cell
-End Sub
+
+workingResultPage.Activate
 
 Range("A1").Select
 
-'delete from B to S
-Columns("B:S").Select
+'delete from B to C
+Columns("B:C").Select
 Application.CutCopyMode = False
 Selection.Delete Shift:=xlToLeft
 
 Range("A1").Select
 
-'delete from D to AA
-Columns("D:AA").Select
+'delete from C to Q
+Columns("B:C").Select
+Application.CutCopyMode = False
 Selection.Delete Shift:=xlToLeft
+
+Range("A1").Select
+
+'delete from E to V
+Columns("B:C").Select
+Application.CutCopyMode = False
+Selection.Delete Shift:=xlToLeft
+
+Range("A1").Select
+
+'convert to currency
+Columns("K:L").Select
+Selection.Style = "Currency"
+
+Range("A1").Select
+
+'move data
+Columns("C:D").Select
+Selection.Cut
+Columns("B:B").Select
+Selection.Insert Shift:=xlToRight
+
+Range("A1").Select
+
+'move data some more
+
+Columns("K:M").Select
+Selection.Cut
+Range("D1").Select
+Selection.Insert Shift:=xlToRight
+
+Range("A1").Select
+
+End Sub
