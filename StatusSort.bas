@@ -8,7 +8,9 @@ Dim sourceRng, proposalColumn As Range
 'for all tabs in the sheet
 For Each Sheet In Worksheets
 'create condition to make sure opperation avoids "OpportunityDetails" sheet
-If (Sheet.Name <> "OpportunityDetails") Or InStr(1, Sheet.Name, "CW") > 0 Or InStr(1, Sheet.Name, "PO") > 0 Or InStr(1, Sheet.Name, "PP") > 0 Or InStr(1, Sheet.Name, "PS") > 0 Then
+If (Sheet.Name <> "OpportunityDetails") Or InStr(1, Sheet.Name, "CW") < 1 Or InStr(1, Sheet.Name, "PO") < 1 Or InStr(1, Sheet.Name, "PP") < 1 Or InStr(1, Sheet.Name, "PS") < 1 Then
+
+
 
 'define sheet
 Set sourceSheet = ActiveSheet
