@@ -8,9 +8,14 @@ Dim sourceRng, proposalColumn As Range
 'for all tabs in the sheet
 For Each Sheet In Worksheets
 'create condition to make sure opperation avoids "OpportunityDetails" sheet
-If (Sheet.Name <> "OpportunityDetails") Or InStr(1, Sheet.Name, "CW") < 1 Or InStr(1, Sheet.Name, "PO") < 1 Or InStr(1, Sheet.Name, "PP") < 1 Or InStr(1, Sheet.Name, "PS") < 1 Then
-
-
+'and other conditons to avoide running opeartion on resulting sheets
+'I was struggling with the or logic so I wrote 6 if statements (I realize this may not be the most efficient code)
+For Each Sheet In Worksheets
+If (InStr(1, Sheet.Name, "OpportunityDetails") = 0) Then
+If (InStr(1, Sheet.Name, "CW") = 0) Then
+If (InStr(1, Sheet.Name, "PO") = 0) Then
+If (InStr(1, Sheet.Name, "PP") = 0) Then
+If (InStr(1, Sheet.Name, "PS") = 0) Then
 
 'define sheet
 Set sourceSheet = ActiveSheet
@@ -198,6 +203,10 @@ For Each cell In proposalColumn
     End If
     
 Next cell
+End If
+End If
+End If
+End If
 End If
 'END OF FOR LOOP THROUGH WORKSHEETS
 Next Sheet
