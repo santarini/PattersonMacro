@@ -6,7 +6,9 @@ Dim sourceRng, proposalColumn As Range
 
 'BEGIN OF FOR LOOP THROUGH WORKSHEETS
 'for all tabs in the sheet
-'For Each Sheet In Worksheets
+For Each Sheet In Worksheets
+'create condition to make sure opperation avoids "OpportunityDetails" sheet
+If Sheet.Name <> "OpportunityDetails" Then
 
 'define sheet
 Set sourceSheet = ActiveSheet
@@ -194,19 +196,9 @@ For Each cell In proposalColumn
     End If
     
 Next cell
-
-
-'get tab name
-'figure out how many instance of the desired categories occur
-'if there is more than one instance for a category create a new tab with that tab name
-
-'TEST CASES
-'sourceRng.Select
-'proposalColumn.Select
-
-
+End If
 'END OF FOR LOOP THROUGH WORKSHEETS
-'Next Sheet
+Next Sheet
 
 End Sub
 Function sheetExists(sheetToFind As String) As Boolean
