@@ -34,12 +34,24 @@ Sub DateValidator()
 ' SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ '
 
+Dim sourceRng As Range
+
+For Each Sheet In Worksheets
+'make sure it's not the opportunity details
+If Sheet.Name <> "OpportunityDetails" Then
+'make sure its one of the new sheets
+If (InStr(1, Sheet.Name, "CW") > 0) Or (InStr(1, Sheet.Name, "PO") > 0) Or (InStr(1, Sheet.Name, "PP") > 0) Or (InStr(1, Sheet.Name, "PS") > 0) Then
+Sheet.Activate
+
 dateValidate ("RFP Release")
 
 dateValidate ("RFP Due")
 
 dateValidate ("Award Start Date")
 
+End If
+End If
+Next Sheet
 End Sub
 
 Function dateValidate(searchTerm As String)
