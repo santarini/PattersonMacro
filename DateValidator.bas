@@ -34,22 +34,44 @@ Sub DateValidator()
 ' SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ '
 
-Dim sourceRng, dateColumn As Range
-Dim dateInCell As Date
+dateValidate ("RFP Release")
 
-'find the cell with value "RFP Release"
-Set sourceRng = Cells.Find(What:="RFP Release", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
+dateValidate ("RFP Due")
 
-'select column beneath it
-sourceRng.Offset(1, 0).Select
-Range(Selection, Selection.End(xlDown)).Select
-cellCount = Selection.Rows.Count
-Set dateColumn = Selection
-
-'validate the dates
-For Each cell In dateColumn
-    dateInCell = cell.Value
-    cell.Value = dateInCell
-Next cell
+dateValidate ("Award Start Date")
 
 End Sub
+
+Function dateValidate(searchTerm As String)
+Dim sourceRng, dateColumn As Range
+Dim dateInCell As Date
+Dim cellCount As Integer
+
+
+'find the cell with value "searchTerm"
+Set sourceRng = Cells.Find(What:=searchTerm, After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
+
+If IsEmpty(sourceRng.Offset(2, 0)) = True Then
+    sourceRng.Offset(1, 0).Select
+    Set dateColumn = Selection
+Else
+    'select column beneath it
+    sourceRng.Offset(1, 0).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    cellCount = Selection.Rows.Count
+    Set dateColumn = Selection
+End If
+    
+'validate the dates
+For Each cell In dateColumn
+    cell.Select
+    If cell.Value = "" Then
+        GoTo Continue
+        
+    Else
+        dateInCell = cell.Value
+        cell.Value = dateInCell
+    End If
+Continue:
+Next cell
+End Function
