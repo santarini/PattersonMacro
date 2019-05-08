@@ -10,12 +10,13 @@ For Each Sheet In Worksheets
 'create condition to make sure opperation avoids "OpportunityDetails" sheet
 'and other conditons to avoide running opeartion on resulting sheets
 'I was struggling with the or logic so I wrote 6 if statements (I realize this may not be the most efficient code)
-For Each Sheet In Worksheets
 If (InStr(1, Sheet.Name, "OpportunityDetails") = 0) Then
 If (InStr(1, Sheet.Name, "CW") = 0) Then
 If (InStr(1, Sheet.Name, "PO") = 0) Then
 If (InStr(1, Sheet.Name, "PP") = 0) Then
 If (InStr(1, Sheet.Name, "PS") = 0) Then
+
+Sheet.Activate
 
 'define sheet
 Set sourceSheet = ActiveSheet
