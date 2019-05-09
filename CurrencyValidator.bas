@@ -73,8 +73,8 @@ Else
     cellCount = Selection.Rows.Count
     Set currencyColumn = Selection
 End If
-    
-'validate the dates
+
+'validate currency
 For Each cell In currencyColumn
     cell.Select
     If cell.Value = "" Then
