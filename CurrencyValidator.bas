@@ -43,18 +43,18 @@ If Sheet.Name <> "OpportunityDetails" Then
 If (InStr(1, Sheet.Name, "CW") > 0) Or (InStr(1, Sheet.Name, "PO") > 0) Or (InStr(1, Sheet.Name, "PP") > 0) Or (InStr(1, Sheet.Name, "PS") > 0) Then
 Sheet.Activate
 
-dollarValidate ("Contract Planned Value")
+currencyValidate ("Contract Planned Value")
 
-dollarValidate ("Contract Funded Value")
+currencyValidate ("Contract Funded Value")
 
-dollarValidate ("Contract Value")
+currencyValidate ("Contract Value")
 
 End If
 End If
 Next Sheet
 End Sub
 
-Function dollarValidate(searchTerm As String)
+Function currencyValidate(searchTerm As String)
 Dim sourceRng, dollarColumn As Range
 Dim dollarInCell As Currency
 Dim cellCount As Integer
@@ -65,17 +65,17 @@ Set sourceRng = Cells.Find(What:=searchTerm, After:=ActiveCell, LookIn:=xlFormul
 
 If IsEmpty(sourceRng.Offset(2, 0)) = True Then
     sourceRng.Offset(1, 0).Select
-    Set dollarColumn = Selection
+    Set currencyColumn = Selection
 Else
     'select column beneath it
     sourceRng.Offset(1, 0).Select
     Range(Selection, Selection.End(xlDown)).Select
     cellCount = Selection.Rows.Count
-    Set dollarColumn = Selection
+    Set currencyColumn = Selection
 End If
     
 'validate the dates
-For Each cell In dollarColumn
+For Each cell In currencyColumn
     cell.Select
     If cell.Value = "" Then
         GoTo Continue
