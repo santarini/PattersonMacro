@@ -1,4 +1,4 @@
-Sub DollarValidator()
+Sub CurrencyValidator()
 
 ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ '
 ' (c) Makoa Santarini - https://github.com/santarini/PattersonMacro
