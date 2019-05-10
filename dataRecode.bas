@@ -85,6 +85,7 @@ sourceRng.Offset(1, 0).Select
 Range(Selection, Selection.End(xlDown)).Select
 cellCount = Selection.Rows.Count
 Set statusColumn = Selection
+sourceRng.Select
 
 i = 1
 For Each cell In statusColumn
@@ -101,7 +102,7 @@ For Each cell In statusColumn
         plannedHeader.Offset(i, 0).Value = dollarValue
         yearValue = awardYear.Offset(i, 0).Value
         qtrValue = awardQtr.Offset(i, 0).Value
-        fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
+        fullDate = QtrYearToDate(qtrValue, yearValue)
         dateHeader.Offset(i, 0).Value = fullDate
     End If
     'if cell.value contains Proposal In Progress
@@ -110,7 +111,7 @@ For Each cell In statusColumn
         inProgressHeader.Offset(i, 0).Value = dollarValue
         yearValue = awardYear.Offset(i, 0).Value
         qtrValue = awardQtr.Offset(i, 0).Value
-        fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
+        fullDate = QtrYearToDate(qtrValue, yearValue)
         dateHeader.Offset(i, 0).Value = fullDate
     End If
     'if cell.value contains Proposal Submitted
@@ -119,7 +120,7 @@ For Each cell In statusColumn
         submittedHeader.Offset(i, 0).Value = dollarValue
         yearValue = awardYear.Offset(i, 0).Value
         qtrValue = awardQtr.Offset(i, 0).Value
-        fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
+        fullDate = QtrYearToDate(qtrValue, yearValue)
         dateHeader.Offset(i, 0).Value = fullDate
     End If
     i = i + 1
