@@ -1,6 +1,10 @@
 Sub createPivotTable()
 '
-' Macro1 Macro
+'if page contains CWPO
+'set as source page
+'get the source page name until CWPO
+'get the last three columns from the data, save them as sourceDataRange
+'create new result page whose name is sourcePage.name Pivot CWPO
 '
 
 'define source data space
