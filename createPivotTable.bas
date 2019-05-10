@@ -50,12 +50,12 @@ PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A1").Address(ReferenceS
 MsgBox SrcData
 MsgBox PvtDest
 
-Set pvtCache = ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData)
-Set pvt = pvtCache.createPivotTable(TableDestination:=PvtDest, TableName:="PivotTable1")
+'Set pvtCache = ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData)
+'Set pvt = pvtCache.createPivotTable(TableDestination:=PvtDest, TableName:="PivotTable1")
 
 i = 1
 'define source data space
-    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=pivotSourceRange, Version:=6).createPivotTable TableDestination:=sheetNameStr(0) & "Pivot!A1", TableName:="PivotTable" & i, DefaultVersion:=6
+    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData, Version:=6).createPivotTable TableDestination:=PvtDest, TableName:="PivotTable" & i, DefaultVersion:=6
     With ActiveSheet.PivotTables("PivotTable" & i)
         .ColumnGrand = True
         .HasAutoFormat = True
