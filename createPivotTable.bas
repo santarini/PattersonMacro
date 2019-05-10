@@ -1,6 +1,6 @@
 Sub createPivotTable()
 
-Dim sourceRng, proposalColumn, pivotSourceRange As Range
+Dim sourceRng, proposalColumn, pivotSourceRange, pivotDateRange As Range
 Dim sourceSheet, destSheet As Worksheet
 
 Dim cellCount As Integer
@@ -98,4 +98,10 @@ i = 1
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").AutoGroup
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Planned"), "Sum of Planned", xlSum
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Actual"), "Sum of Actual", xlSum
+    
+    'ActiveSheet.PivotTables("PivotTable1").PivotSelect "Years[All]", xlLabelOnly + xlFirstRow, True
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="1/1/2020"
+    'Range("A1").Select
+
+
 End Sub
