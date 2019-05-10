@@ -99,40 +99,77 @@ For Each cell In statusColumn
         dollarValue = fundedValue.Offset(i, 0).Value
         acutalHeader.Offset(i, 0).Value = dollarValue
         awardStart.Offset(i, 0).Select
-        If isblank(awardStart.Offset(i, 0).Value) Then
-        fullDate = QtrYearToDate(qtrValue, yearValue)
-        dateHeader.Offset(i, 0).Value = fullDate
+        If IsEmpty(awardStart.Offset(i, 0)) = True Then
+            fullDate = QtrYearToDate(qtrValue, yearValue)
+            dateHeader.Offset(i, 0).Value = fullDate
+        ElseIf IsError(awardStart.Offset(i, 0)) = True Then
+            fullDate = QtrYearToDate(qtrValue, yearValue)
+            dateHeader.Offset(i, 0).Value = fullDate
+        ElseIf awardStart.Offset(i, 0) = "" Then
+            fullDate = QtrYearToDate(qtrValue, yearValue)
+            dateHeader.Offset(i, 0).Value = fullDate
         Else
-        fullDate = awardStart.Offset(i, 0).Value
-        dateHeader.Offset(i, 0).Value = fullDate
+            awardStart.Offset(i, 0).Select
+            fullDate = awardStart.Offset(i, 0).Value
+            dateHeader.Offset(i, 0).Value = fullDate
         End If
     End If
     'if cell.value contains "Pipeline Opportunity"
     If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
         dollarValue = contractValue.Offset(i, 0).Value
         plannedHeader.Offset(i, 0).Value = dollarValue
+        If IsEmpty(awardYear.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf IsEmpty(awardQtr.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf IsError(awardStart.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf awardYear.Offset(i, 0) = "" Then
+        dateHeader.Offset(i, 0).Value = ""
+        Else
         yearValue = awardYear.Offset(i, 0).Value
         qtrValue = awardQtr.Offset(i, 0).Value
         fullDate = QtrYearToDate(qtrValue, yearValue)
         dateHeader.Offset(i, 0).Value = fullDate
+        End If
     End If
     'if cell.value contains Proposal In Progress
     If InStr(1, cell.Value, "Proposal In Progress") > 0 Then
         dollarValue = contractValue.Offset(i, 0).Value
         inProgressHeader.Offset(i, 0).Value = dollarValue
+        If IsEmpty(awardYear.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf IsEmpty(awardQtr.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf IsError(awardStart.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf awardYear.Offset(i, 0) = "" Then
+        dateHeader.Offset(i, 0).Value = ""
+        Else
         yearValue = awardYear.Offset(i, 0).Value
         qtrValue = awardQtr.Offset(i, 0).Value
         fullDate = QtrYearToDate(qtrValue, yearValue)
         dateHeader.Offset(i, 0).Value = fullDate
+        End If
     End If
     'if cell.value contains Proposal Submitted
     If InStr(1, cell.Value, "Proposal Submitted") > 0 Then
         dollarValue = contractValue.Offset(i, 0).Value
         submittedHeader.Offset(i, 0).Value = dollarValue
+        If IsEmpty(awardYear.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf IsEmpty(awardQtr.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf IsError(awardStart.Offset(i, 0)) = True Then
+        dateHeader.Offset(i, 0).Value = ""
+        ElseIf awardYear.Offset(i, 0) = "" Then
+        dateHeader.Offset(i, 0).Value = ""
+        Else
         yearValue = awardYear.Offset(i, 0).Value
         qtrValue = awardQtr.Offset(i, 0).Value
         fullDate = QtrYearToDate(qtrValue, yearValue)
         dateHeader.Offset(i, 0).Value = fullDate
+        End If
     End If
     i = i + 1
 Next cell
