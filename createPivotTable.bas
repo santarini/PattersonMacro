@@ -1,8 +1,13 @@
 Sub createPivotTable()
 
 Dim sourceRng, proposalColumn, pivotSourceRange As Range
+Dim sourceSheet, destSheet As Worksheet
+
 Dim cellCount As Integer
 Dim sheetNameStr As Variant
+Dim SrcData, PvtDest As String
+Dim pvtCache As PivotCache
+Dim pvt As PivotTable
 
 'if page contains CWPO
 'set as source page
@@ -15,6 +20,8 @@ sheetNameStr = Split(sourceSheet.Name, "CWPO")
 
 'create new result page whose name is sourcePage.name Pivot CWPO
 Sheets.Add.Name = sheetNameStr(0) & "Pivot"
+
+Set destSheet = ActiveSheet
 
 sourceSheet.Activate
 
@@ -37,7 +44,14 @@ Selection.End(xlToRight).Offset(0, -2).Select
 Range(Selection, Selection.End(xlToRight)).Select
 ActiveCell.Resize(cellCount + 1, 3).Select
 Set pivotSourceRange = Selection
+SrcData = "'" & sourceSheet.Name & "'!" & pivotSourceRange.Address(ReferenceStyle:=xlR1C1)
+PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A1").Address(ReferenceStyle:=xlR1C1)
 
+MsgBox SrcData
+MsgBox PvtDest
+
+Set pvtCache = ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData)
+Set pvt = pvtCache.createPivotTable(TableDestination:=PvtDest, TableName:="PivotTable1")
 
 i = 1
 'define source data space
