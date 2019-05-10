@@ -109,13 +109,8 @@ For Each cell In statusColumn
         dollarValue = contractValue.Offset(i, 0).Value
         inProgressHeader.Offset(i, 0).Value = dollarValue
         yearValue = awardYear.Offset(i, 0).Value
-        awardYear.Offset(i, 0).Select
-        MsgBox yearValue
         qtrValue = awardQtr.Offset(i, 0).Value
-        awardQtr.Offset(i, 0).Select
-        MsgBox qtrValue
         fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
-        MsgBox fullDate
         dateHeader.Offset(i, 0).Value = fullDate
     End If
     'if cell.value contains Proposal Submitted
@@ -123,13 +118,8 @@ For Each cell In statusColumn
         dollarValue = contractValue.Offset(i, 0).Value
         inProgressHeader.Offset(i, 0).Value = dollarValue
         yearValue = awardYear.Offset(i, 0).Value
-        awardYear.Offset(i, 0).Select
-        MsgBox yearValue
         qtrValue = awardQtr.Offset(i, 0).Value
-        awardQtr.Offset(i, 0).Select
-        MsgBox qtrValue
-        fullDate = QtrYearToDate(qtrValue, yearValue)
-        MsgBox fullDate
+        fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
         dateHeader.Offset(i, 0).Value = fullDate
     End If
     i = i + 1
@@ -142,8 +132,6 @@ End Sub
 Function QtrYearToDate(ByVal qtrValue As Integer, ByVal yearValue As Integer) As Date
 Dim fullDate As Date
 Dim proxyMonth As Integer
-
-MsgBox qtrValue
 
 If qtrValue = 1 Then
 proxyMonth = 1
@@ -160,9 +148,6 @@ End If
 If qtrValue = 4 Then
 proxyMonth = 10
 End If
-
-MsgBox proxyMonth
-MsgBox yearValue
 
 QtrYearToDate = DateSerial(yearValue, proxyMonth, 1)
 
