@@ -1,8 +1,11 @@
 Sub DataRecode()
 
 Dim sourceSheet As Worksheet
-Dim sourceRng, fundedValue, awardStart, contractValue, awardYear, awardQtr, statusColumn As Range
-Dim cellCount As Integer
+Dim sourceRng, fundedValue, awardStart, contractValue, awardYear, awardQtr, statusColumn, plannedHeader, acutalHeader, dateHeader, inProgressHeader, submittedHeader As Range
+Dim i, cellCount, qtrValue, yearValue As Integer
+Dim dollarValue As Currency
+Dim fullDate As Date
+
 
 'if page contains CWPO
 If (InStr(1, ActiveSheet.Name, "CWPO") > 0) Then
@@ -40,11 +43,15 @@ Selection.End(xlToRight).Offset(0, 1).Value = "Planned"
 Selection.End(xlToRight).Offset(0, 1).Value = "Actual"
 Selection.End(xlToRight).Offset(0, 1).Value = "Date"
 
+i = 1
 'if page contains PPPS
 For Each cell In statusColumn
     'if cell.value contains Closed Wonn
     If InStr(1, cell.Value, "Closed Won") > 0 Then
-        'go to farthest filled cell to right plus one
+        dollarValue = fundedValue.Offset(i, 0).Value
+        
+    
+        
         'create header "In Progress"
         'just right of that, create header "Submitted"
         'just right of that, create header "Date"
@@ -60,6 +67,7 @@ For Each cell In statusColumn
     'if cell.value contains Proposal Submitted
     If InStr(1, cell.Value, "Proposal Submitted") > 0 Then
     End If
+    i = i + 1
 Next cell
 
 
