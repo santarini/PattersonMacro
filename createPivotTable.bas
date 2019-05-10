@@ -10,8 +10,7 @@ Dim pvtCache As PivotCache
 Dim pvt As PivotTable
 
 For Each Sheet In Worksheets
-If (InStr(1, Sheet.Name, "OpportunityDetails") = 0) Then
-'if page contains CWPO or PPPS
+'make sure it's not the first page
 If (InStr(1, Sheet.Name, "CWPO") > 0) Or (InStr(1, Sheet.Name, "PPPS") > 0) Then
 
 Sheet.Activate
@@ -20,13 +19,22 @@ Sheet.Activate
 'define sheet
 Set sourceSheet = ActiveSheet
 
-'get the source page name until CWPO
+'get the source page name until abbreviation
+If (InStr(1, Sheet.Name, "CWPO") > 0) Then
 sheetNameStr = Split(sourceSheet.Name, "CWPO")
+End If
+If (InStr(1, Sheet.Name, "PPPS") > 0) Then
+sheetNameStr = Split(sourceSheet.Name, "PPPS")
+End If
 
-'create new result page whose name is sourcePage.name Pivot CWPO
-Sheets.Add.Name = sheetNameStr(0) & "Pivot"
-
-Set destSheet = ActiveSheet
+'if it doeset not already exists, create new result page whose name is sourcePage.name Pivot CWPO
+If sheetExists(sheetNameStr(0) & "Pivot") = False Then
+    Sheets.Add.Name = sheetNameStr(0) & "Pivot"
+    Set destSheet = ActiveSheet
+Else
+    'if it does exist re-define it
+    Set destSheet = Sheets(sheetNameStr(0) & "Pivot")
+End If
 
 sourceSheet.Activate
 
@@ -50,7 +58,12 @@ Range(Selection, Selection.End(xlToRight)).Select
 ActiveCell.Resize(cellCount + 1, 3).Select
 Set pivotSourceRange = Selection
 SrcData = "'" & sourceSheet.Name & "'!" & pivotSourceRange.Address(ReferenceStyle:=xlR1C1)
-PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A1").Address(ReferenceStyle:=xlR1C1)
+If (InStr(1, Sheet.Name, "CWPO") > 0) Then
+    PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A1").Address(ReferenceStyle:=xlR1C1)
+End If
+If (InStr(1, Sheet.Name, "PPPS") > 0) Then
+    PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A5").Address(ReferenceStyle:=xlR1C1)
+End If
 
 
 'Set pvtCache = ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData)
@@ -58,6 +71,7 @@ PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A1").Address(ReferenceS
 
 i = 1
 'define source data space
+
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData, Version:=6).createPivotTable TableDestination:=PvtDest, TableName:="PivotTable" & i, DefaultVersion:=6
     destSheet.Activate
     With ActiveSheet.PivotTables("PivotTable" & i)
@@ -103,20 +117,21 @@ i = 1
     
 'add data lines
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").AutoGroup
+If (InStr(1, Sheet.Name, "CWPO") > 0) Then
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Planned"), "Sum of Planned", xlSum
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Actual"), "Sum of Actual", xlSum
+End If
+If (InStr(1, Sheet.Name, "PPPS") > 0) Then
+        ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("In Progress"), "Count of In Progress", xlCount
+    ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Submitted"), "Sum of Submitted", xlSum
+End If
+
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="1/1/2020"
     ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years[All]", xlLabelOnly + xlFirstRow, True
     Selection.ShowDetail = True
  
  End If
 
- 
- If (InStr(1, Sheet.Name, "PPPS") = 0) Then
-
-End If
-
-End If
 Next Sheet
 
 End Sub
