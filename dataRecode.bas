@@ -10,11 +10,60 @@ Dim fullDate As Date
 'if page contains CWPO
 If (InStr(1, ActiveSheet.Name, "CWPO") > 0) Then
 
+
 'set page as sourcePage
 Set sourceSheet = ActiveSheet
 
 'find cell with value "proposal status"
 Set sourceRng = Cells.Find(What:="Proposal Status", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
+
+'go to farthest filled cell to right plus one and define new headers
+sourceRng.Select
+Selection.End(xlToRight).Offset(0, 1).Select
+Set plannedHeader = Selection
+plannedHeader.Value = "Planned"
+
+sourceRng.Select
+Selection.End(xlToRight).Offset(0, 1).Select
+Set acutalHeader = Selection
+acutalHeader.Value = "Actual"
+
+sourceRng.Select
+Selection.End(xlToRight).Offset(0, 1).Select
+Set dateHeader = Selection
+dateHeader.Value = "Date"
+
+End If
+
+
+'if page contains CWPO
+If (InStr(1, ActiveSheet.Name, "PPPS") > 0) Then
+
+'set page as sourcePage
+Set sourceSheet = ActiveSheet
+
+'find cell with value "proposal status"
+Set sourceRng = Cells.Find(What:="Proposal Status", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
+
+'go to farthest filled cell to right plus one and define new headers
+sourceRng.Select
+Selection.End(xlToRight).Offset(0, 1).Select
+Set inProgressHeader = Selection
+inProgressHeader.Value = "In Progress"
+
+sourceRng.Select
+Selection.End(xlToRight).Offset(0, 1).Select
+Set submittedHeader = Selection
+submittedHeader.Value = "Submitted"
+
+sourceRng.Select
+Selection.End(xlToRight).Offset(0, 1).Select
+Set dateHeader = Selection
+dateHeader.Value = "Date"
+
+End If
+
+If (InStr(1, ActiveSheet.Name, "CWPO") > 0) Or (InStr(1, ActiveSheet.Name, "PPPS") > 0) Then
 
 'find cell with value "Contract Funded Value"
 Set fundedValue = Cells.Find(What:="Contract Funded Value", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
@@ -36,30 +85,19 @@ sourceRng.Offset(1, 0).Select
 Range(Selection, Selection.End(xlDown)).Select
 cellCount = Selection.Rows.Count
 Set statusColumn = Selection
-sourceRng.Select
-
-'go to farthest filled cell to right plus one and define new headers
-Selection.End(xlToRight).Offset(0, 1).Value = "Planned"
-Selection.End(xlToRight).Offset(0, 1).Value = "Actual"
-Selection.End(xlToRight).Offset(0, 1).Value = "Date"
 
 i = 1
-'if page contains PPPS
 For Each cell In statusColumn
     'if cell.value contains Closed Wonn
     If InStr(1, cell.Value, "Closed Won") > 0 Then
         dollarValue = fundedValue.Offset(i, 0).Value
+        acutalHeader.Offset(i, 0).Value = dollarValue
         
-    
-        
-        'create header "In Progress"
-        'just right of that, create header "Submitted"
-        'just right of that, create header "Date"
-        'go to sourceRng
-        'select entire column beneath soureRng, define as statusCol
     End If
     'if cell.value contains "Pipeline Opportunity"
     If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
+        dollarValue = contractValue.Offset(i, 0).Value
+        plannedHeader.Offset(i, 0).Value = dollarValue
     End If
     'if cell.value contains Proposal In Progress
     If InStr(1, cell.Value, "Proposal In Progress") > 0 Then
