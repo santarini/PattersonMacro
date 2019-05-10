@@ -1,3 +1,3 @@
 # PattersonMacro
 
--[ ] Status Sort
+- [ ] Status Sort
