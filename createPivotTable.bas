@@ -47,8 +47,6 @@ Set pivotSourceRange = Selection
 SrcData = "'" & sourceSheet.Name & "'!" & pivotSourceRange.Address(ReferenceStyle:=xlR1C1)
 PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A1").Address(ReferenceStyle:=xlR1C1)
 
-MsgBox SrcData
-MsgBox PvtDest
 
 'Set pvtCache = ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData)
 'Set pvt = pvtCache.createPivotTable(TableDestination:=PvtDest, TableName:="PivotTable1")
@@ -56,6 +54,7 @@ MsgBox PvtDest
 i = 1
 'define source data space
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData, Version:=6).createPivotTable TableDestination:=PvtDest, TableName:="PivotTable" & i, DefaultVersion:=6
+    destSheet.Activate
     With ActiveSheet.PivotTables("PivotTable" & i)
         .ColumnGrand = True
         .HasAutoFormat = True
@@ -97,6 +96,6 @@ i = 1
         .Position = 1
     End With
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").AutoGroup
-    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable4").PivotFields("Planned"), "Sum of Planned", xlSum
-    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable4").PivotFields("Actual"), "Sum of Actual", xlSum
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Planned"), "Sum of Planned", xlSum
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Actual"), "Sum of Actual", xlSum
 End Sub
