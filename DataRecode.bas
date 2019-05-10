@@ -68,7 +68,7 @@ dateHeader.Value = "Date"
 
 End If
 
-If (InStr(1, ActiveSheet.Name, "CWPO") > 0) Or (InStr(1, ActiveSheet.Name, "PPPS") > 0) Then
+If (InStr(1, Sheet.Name, "CWPO") > 0) Or (InStr(1, Sheet.Name, "PPPS") > 0) Then
 
 'find cell with value "Contract Funded Value"
 Set fundedValue = Cells.Find(What:="Contract Funded Value", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
