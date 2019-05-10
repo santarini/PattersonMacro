@@ -99,27 +99,71 @@ For Each cell In statusColumn
     If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
         dollarValue = contractValue.Offset(i, 0).Value
         plannedHeader.Offset(i, 0).Value = dollarValue
+        yearValue = awardYear.Offset(i, 0).Value
+        qtrValue = awardQtr.Offset(i, 0).Value
+        fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
+        dateHeader.Offset(i, 0).Value = fullDate
     End If
     'if cell.value contains Proposal In Progress
     If InStr(1, cell.Value, "Proposal In Progress") > 0 Then
+        dollarValue = contractValue.Offset(i, 0).Value
+        inProgressHeader.Offset(i, 0).Value = dollarValue
+        yearValue = awardYear.Offset(i, 0).Value
+        awardYear.Offset(i, 0).Select
+        MsgBox yearValue
+        qtrValue = awardQtr.Offset(i, 0).Value
+        awardQtr.Offset(i, 0).Select
+        MsgBox qtrValue
+        fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
+        MsgBox fullDate
+        dateHeader.Offset(i, 0).Value = fullDate
     End If
     'if cell.value contains Proposal Submitted
     If InStr(1, cell.Value, "Proposal Submitted") > 0 Then
+        dollarValue = contractValue.Offset(i, 0).Value
+        inProgressHeader.Offset(i, 0).Value = dollarValue
+        yearValue = awardYear.Offset(i, 0).Value
+        awardYear.Offset(i, 0).Select
+        MsgBox yearValue
+        qtrValue = awardQtr.Offset(i, 0).Value
+        awardQtr.Offset(i, 0).Select
+        MsgBox qtrValue
+        fullDate = QtrYearToDate(qtrValue, yearValue)
+        MsgBox fullDate
+        dateHeader.Offset(i, 0).Value = fullDate
     End If
     i = i + 1
 Next cell
 
-
-'for each cell in status column
-
-
-'if cell.value contains Pipeline Opportunity
-
-
-
-
-
-
 End If
 
 End Sub
+
+Function QtrYearToDate(ByVal qtrValue As Integer, ByVal yearValue As Integer) As Date
+Dim fullDate As Date
+Dim proxyMonth As Integer
+
+MsgBox qtrValue
+
+If qtrValue = 1 Then
+proxyMonth = 1
+End If
+
+If qtrValue = 2 Then
+proxyMonth = 4
+End If
+
+If qtrValue = 3 Then
+proxyMonth = 7
+End If
+
+If qtrValue = 4 Then
+proxyMonth = 10
+End If
+
+MsgBox proxyMonth
+MsgBox yearValue
+
+QtrYearToDate = DateSerial(yearValue, proxyMonth, 1)
+
+End Function
