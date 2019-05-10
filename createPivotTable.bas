@@ -13,13 +13,15 @@ Sub createPivotTable()
     Range(Selection, Selection.End(xlToRight)).Select
     Sheets.Add
 
-'create pivot table
-    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:="Asset Mgmt CW!R1C1:R18C51", Version:=6).CreatePivotTable TableDestination:="Sheet30!R3C1", TableName:="PivotTable1", DefaultVersion:=6
-    Sheets("Sheet30").Select
+    Range("AZ1:BB26").Select
+    Sheets.Add
+    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
+        "Asset Mgmt CWPO!R1C52:R26C54", Version:=6).createPivotTable _
+        TableDestination:="Sheet72!R3C1", TableName:="PivotTable4", DefaultVersion _
+        :=6
+    Sheets("Sheet72").Select
     Cells(3, 1).Select
-    
-'give attributes to pivot table
-    With ActiveSheet.PivotTables("PivotTable1")
+    With ActiveSheet.PivotTables("PivotTable4")
         .ColumnGrand = True
         .HasAutoFormat = True
         .DisplayErrorString = False
@@ -50,22 +52,17 @@ Sub createPivotTable()
         .CalculatedMembersInFilters = False
         .RowAxisLayout xlCompactRow
     End With
-    
-    With ActiveSheet.PivotTables("PivotTable1").PivotCache
+    With ActiveSheet.PivotTables("PivotTable4").PivotCache
         .RefreshOnFileOpen = False
         .MissingItemsLimit = xlMissingItemsDefault
     End With
-    
-    ActiveSheet.PivotTables("PivotTable1").RepeatAllLabels xlRepeatLabels
-    ActiveWindow.SmallScroll Down:=-42
-    
-    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Award Start Date")
+    ActiveSheet.PivotTables("PivotTable4").RepeatAllLabels xlRepeatLabels
+    With ActiveSheet.PivotTables("PivotTable4").PivotFields("Date")
         .Orientation = xlRowField
         .Position = 1
     End With
-    
-    ActiveSheet.PivotTables("PivotTable1").PivotFields("Award Start Date").AutoGroup
-    ActiveWindow.SmallScroll Down:=0
-    ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables("PivotTable1").PivotFields("Contract Planned Value"), "Sum of Contract Planned Value", xlSum
-    ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables("PivotTable1").PivotFields("Contract Funded Value"), "Sum of Contract Funded Value", xlSum
-End Sub
+    ActiveSheet.PivotTables("PivotTable4").PivotFields("Date").AutoGroup
+    ActiveSheet.PivotTables("PivotTable4").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable4").PivotFields("Planned"), "Sum of Planned", xlSum
+    ActiveSheet.PivotTables("PivotTable4").AddDataField ActiveSheet.PivotTables( _
+        "PivotTable4").PivotFields("Actual"), "Sum of Actual", xlSum
