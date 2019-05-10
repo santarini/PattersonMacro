@@ -92,7 +92,8 @@ For Each cell In statusColumn
     If InStr(1, cell.Value, "Closed Won") > 0 Then
         dollarValue = fundedValue.Offset(i, 0).Value
         acutalHeader.Offset(i, 0).Value = dollarValue
-        
+        fullDate = awardStart.Offset(i, 0).Value
+        dateHeader.Offset(i, 0).Value = fullDate
     End If
     'if cell.value contains "Pipeline Opportunity"
     If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
