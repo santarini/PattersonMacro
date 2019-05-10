@@ -45,10 +45,8 @@ For Each Sheet In Worksheets
 'and other conditons to avoide running opeartion on resulting sheets
 'I was struggling with the or logic so I wrote 6 if statements (I realize this may not be the most efficient code)
 If (InStr(1, Sheet.Name, "OpportunityDetails") = 0) Then
-If (InStr(1, Sheet.Name, "CW") = 0) Then
-If (InStr(1, Sheet.Name, "PO") = 0) Then
-If (InStr(1, Sheet.Name, "PP") = 0) Then
-If (InStr(1, Sheet.Name, "PS") = 0) Then
+If (InStr(1, Sheet.Name, "CWPO") = 0) Then
+If (InStr(1, Sheet.Name, "PPPS") = 0) Then
 
 Sheet.Activate
 
@@ -72,21 +70,21 @@ For Each cell In proposalColumn
     'check for "Closed Won"
     If InStr(1, cell.Value, "Closed Won") > 0 Then
         'check if sheet exists
-        If sheetExists(sourceSheet.Name & " CW") = False Then
+        If sheetExists(sourceSheet.Name & " CWPO") = False Then
             'activate the source sheet
             sourceSheet.Activate
             'take the header from the source sheet
             sourceSheet.Range("A1:AY1").Copy
             'create the dest sheet
-            Sheets.Add.Name = sourceSheet.Name & " CW"
+            Sheets.Add.Name = sourceSheet.Name & " CWPO"
             'define the dest sheet
-            Set destSheet = Sheets(sourceSheet.Name & " CW")
+            Set destSheet = Sheets(sourceSheet.Name & " CWPO")
             'define a rng in the dest sheet
             destSheet.Range("A1").Select
             'paste the header at the rng
             ActiveSheet.Paste
         Else
-            Set destSheet = Sheets(sourceSheet.Name & " CW")
+            Set destSheet = Sheets(sourceSheet.Name & " CWPO")
         End If
         'activate source sheet
         sourceSheet.Activate
@@ -114,21 +112,21 @@ For Each cell In proposalColumn
     'check for "Pipeline Opportunity"
     If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
         'check if sheet exists
-        If sheetExists(sourceSheet.Name & " PO") = False Then
+        If sheetExists(sourceSheet.Name & " CWPO") = False Then
             'activate the source sheet
             sourceSheet.Activate
             'take the header from the source sheet
             sourceSheet.Range("A1:AY1").Copy
             'create the dest sheet
-            Sheets.Add.Name = sourceSheet.Name & " PO"
+            Sheets.Add.Name = sourceSheet.Name & " CWPO"
             'define the dest sheet
-            Set destSheet = Sheets(sourceSheet.Name & " PO")
+            Set destSheet = Sheets(sourceSheet.Name & " CWPO")
             'define a rng in the dest sheet
             destSheet.Range("A1").Select
             'paste the header at the rng
             ActiveSheet.Paste
         Else
-            Set destSheet = Sheets(sourceSheet.Name & " PO")
+            Set destSheet = Sheets(sourceSheet.Name & " CWPO")
         End If
         'activate source sheet
         sourceSheet.Activate
@@ -156,21 +154,21 @@ For Each cell In proposalColumn
     'check for "Proposal In Progress"
     If InStr(1, cell.Value, "Proposal In Progress") > 0 Then
         'check if sheet exists
-        If sheetExists(sourceSheet.Name & " PP") = False Then
+        If sheetExists(sourceSheet.Name & " PPPS") = False Then
             'activate the source sheet
             sourceSheet.Activate
             'take the header from the source sheet
             sourceSheet.Range("A1:AY1").Copy
             'create the dest sheet
-            Sheets.Add.Name = sourceSheet.Name & " PP"
+            Sheets.Add.Name = sourceSheet.Name & " PPPS"
             'define the dest sheet
-            Set destSheet = Sheets(sourceSheet.Name & " PP")
+            Set destSheet = Sheets(sourceSheet.Name & " PPPS")
             'define a rng in the dest sheet
             destSheet.Range("A1").Select
             'paste the header at the rng
             ActiveSheet.Paste
         Else
-            Set destSheet = Sheets(sourceSheet.Name & " PP")
+            Set destSheet = Sheets(sourceSheet.Name & " PPPS")
         End If
         'activate source sheet
         sourceSheet.Activate
@@ -198,21 +196,21 @@ For Each cell In proposalColumn
     'check for "Proposal Submitted"
     If InStr(1, cell.Value, "Proposal Submitted") > 0 Then
         'check if sheet exists
-        If sheetExists(sourceSheet.Name & " PS") = False Then
+        If sheetExists(sourceSheet.Name & " PPPS") = False Then
             'activate the source sheet
             sourceSheet.Activate
             'take the header from the source sheet
             sourceSheet.Range("A1:AY1").Copy
             'create the dest sheet
-            Sheets.Add.Name = sourceSheet.Name & " PS"
+            Sheets.Add.Name = sourceSheet.Name & " PPPS"
             'define the dest sheet
-            Set destSheet = Sheets(sourceSheet.Name & " PS")
+            Set destSheet = Sheets(sourceSheet.Name & " PPPS")
             'define a rng in the dest sheet
             destSheet.Range("A1").Select
             'paste the header at the rng
             ActiveSheet.Paste
         Else
-            Set destSheet = Sheets(sourceSheet.Name & " PS")
+            Set destSheet = Sheets(sourceSheet.Name & " PPPS")
         End If
         'activate source sheet
         sourceSheet.Activate
