@@ -7,6 +7,8 @@ Dim dollarValue As Currency
 Dim fullDate As Date
 
 
+For Each Sheet In Worksheets
+
 'if page contains CWPO
 If (InStr(1, ActiveSheet.Name, "CWPO") > 0) Then
 
@@ -127,6 +129,8 @@ For Each cell In statusColumn
 Next cell
 
 End If
+
+Next Sheet
 
 End Sub
 
