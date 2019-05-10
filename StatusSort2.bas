@@ -239,8 +239,6 @@ Next cell
 End If
 End If
 End If
-End If
-End If
 'END OF FOR LOOP THROUGH WORKSHEETS
 Next Sheet
 
