@@ -1,11 +1,36 @@
 Sub createPivotTable()
-'
+
+Dim sourceRng, proposalColumn As Range
+Dim cellCount As Integer
+
+
+
 'if page contains CWPO
 'set as source page
+
+'define sheet
+Set sourceSheet = ActiveSheet
+
 'get the source page name until CWPO
 'get the last three columns from the data, save them as sourceDataRange
 'create new result page whose name is sourcePage.name Pivot CWPO
 '
+
+'find cell with value "proposal status"
+Set sourceRng = Cells.Find(What:="Proposal Status", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
+
+'define the proposal column range
+If sourceRng.Offset(2, 0) = "" Then
+    cellCount = 1
+Else
+    sourceRng.Offset(1, 0).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    cellCount = Selection.Rows.Count
+End If
+    sourceRng.Select
+
+'define the proposal column range
+
 
 'define source data space
     Range("A1").Select
