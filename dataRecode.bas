@@ -116,7 +116,7 @@ For Each cell In statusColumn
     'if cell.value contains Proposal Submitted
     If InStr(1, cell.Value, "Proposal Submitted") > 0 Then
         dollarValue = contractValue.Offset(i, 0).Value
-        inProgressHeader.Offset(i, 0).Value = dollarValue
+        submittedHeader.Offset(i, 0).Value = dollarValue
         yearValue = awardYear.Offset(i, 0).Value
         qtrValue = awardQtr.Offset(i, 0).Value
         fullDate = QtrYearToDate(qtrValue = qtrValue, yearValue = yearValue)
