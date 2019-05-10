@@ -15,10 +15,7 @@ Sub createPivotTable()
 
     Range("AZ1:BB26").Select
     Sheets.Add
-    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
-        "Asset Mgmt CWPO!R1C52:R26C54", Version:=6).createPivotTable _
-        TableDestination:="Sheet72!R3C1", TableName:="PivotTable4", DefaultVersion _
-        :=6
+    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:="Asset Mgmt CWPO!R1C52:R26C54", Version:=6).createPivotTable TableDestination:="Sheet72!R3C1", TableName:="PivotTable4", DefaultVersion:=6
     Sheets("Sheet72").Select
     Cells(3, 1).Select
     With ActiveSheet.PivotTables("PivotTable4")
@@ -62,7 +59,6 @@ Sub createPivotTable()
         .Position = 1
     End With
     ActiveSheet.PivotTables("PivotTable4").PivotFields("Date").AutoGroup
-    ActiveSheet.PivotTables("PivotTable4").AddDataField ActiveSheet.PivotTables( _
-        "PivotTable4").PivotFields("Planned"), "Sum of Planned", xlSum
-    ActiveSheet.PivotTables("PivotTable4").AddDataField ActiveSheet.PivotTables( _
-        "PivotTable4").PivotFields("Actual"), "Sum of Actual", xlSum
+    ActiveSheet.PivotTables("PivotTable4").AddDataField ActiveSheet.PivotTables("PivotTable4").PivotFields("Planned"), "Sum of Planned", xlSum
+    ActiveSheet.PivotTables("PivotTable4").AddDataField ActiveSheet.PivotTables("PivotTable4").PivotFields("Actual"), "Sum of Actual", xlSum
+End Sub
