@@ -13,34 +13,20 @@ Set sourceSheet = ActiveSheet
 'find cell with value "proposal status"
 Set sourceRng = Cells.Find(What:="Proposal Status", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
 
-sourceRng.Select
-
 'find cell with value "Contract Funded Value"
 Set fundedValue = Cells.Find(What:="Contract Funded Value", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
 
-fundedValue.Select
-
 'find cell with value "Award Start Date"
 Set awardStart = Cells.Find(What:="Award Start Date", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
-
-awardStart.Select
-
-
+ 
 'find cell with value "Contract Value"
 Set contractValue = Cells.Find(What:="Contract Value", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
-
-contractValue.Select
 
 'find cell with value "Projected Contract Award (Year)"
 Set awardYear = Cells.Find(What:="Projected Contract Award (Year)", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
 
-awardYear.Select
-
 'find cell with value "Projected Contract Award (Quarter)"
 Set awardQtr = Cells.Find(What:="Projected Contract Award (Quarter)", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
-
-awardYear.Select
-
 
 'define the proposal column range
 sourceRng.Offset(1, 0).Select
@@ -56,18 +42,24 @@ Selection.End(xlToRight).Offset(0, 1).Value = "Date"
 
 'if page contains PPPS
 For Each cell In statusColumn
-'if cell.value contains Closed Won
-'then
-
-
-'if cell.value contains Proposal Submitted
-'if cell.value contains Proposal In Progress
-'go to farthest filled cell to right plus one
-'create header "In Progress"
-'just right of that, create header "Submitted"
-'just right of that, create header "Date"
-'go to sourceRng
-'select entire column beneath soureRng, define as statusCol
+    'if cell.value contains Closed Wonn
+    If InStr(1, cell.Value, "Closed Won") > 0 Then
+        'go to farthest filled cell to right plus one
+        'create header "In Progress"
+        'just right of that, create header "Submitted"
+        'just right of that, create header "Date"
+        'go to sourceRng
+        'select entire column beneath soureRng, define as statusCol
+    End If
+    'if cell.value contains "Pipeline Opportunity"
+    If InStr(1, cell.Value, "Pipeline Opportunity") > 0 Then
+    End If
+    'if cell.value contains Proposal In Progress
+    If InStr(1, cell.Value, "Proposal In Progress") > 0 Then
+    End If
+    'if cell.value contains Proposal Submitted
+    If InStr(1, cell.Value, "Proposal Submitted") > 0 Then
+    End If
 Next cell
 
 
