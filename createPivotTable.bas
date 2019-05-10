@@ -129,7 +129,7 @@ If (InStr(1, Sheet.Name, "PPPS") > 0) Then
     'ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Months[All]", xlLabelOnly + xlFirstRow, True
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("In Progress"), "Count of In Progress", xlCount
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Submitted"), "Sum of Submitted", xlSum
-    ActiveSheet.PivotTables("PivotTable8").PivotSelect "Date[All]", xlLabelOnly + xlFirstRow, True
+    ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Date[All]", xlLabelOnly + xlFirstRow, True
     Selection.Group Start:=True, End:=True, Periods:=Array(False, False, False, False, False, True, True)
 End If
  
