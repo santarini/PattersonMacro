@@ -10,8 +10,9 @@ Dim fullDate As Date
 For Each Sheet In Worksheets
 
 'if page contains CWPO
-If (InStr(1, ActiveSheet.Name, "CWPO") > 0) Then
+If (InStr(1, Sheet.Name, "CWPO") > 0) Then
 
+Sheet.Activate
 
 'set page as sourcePage
 Set sourceSheet = ActiveSheet
@@ -39,7 +40,9 @@ End If
 
 
 'if page contains CWPO
-If (InStr(1, ActiveSheet.Name, "PPPS") > 0) Then
+If (InStr(1, Sheet.Name, "PPPS") > 0) Then
+
+Sheet.Activate
 
 'set page as sourcePage
 Set sourceSheet = ActiveSheet
