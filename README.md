@@ -2,6 +2,8 @@
 
 - [ ] Status Sort
 
-1.) CatSort
-2.) StatusSort
-3.) DataRecode
+<ol>
+<li> CatSort <\li>
+<li> StatusSort <\li>
+<li> DateRecode <\li>
+<\ol>
