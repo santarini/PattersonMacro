@@ -1,6 +1,6 @@
 Sub createPivotTable()
 
-Dim sourceRng, proposalColumn As Range
+Dim sourceRng, proposalColumn, pivotSourceRange As Range
 Dim cellCount As Integer
 
 
@@ -29,7 +29,12 @@ Else
 End If
     sourceRng.Select
 
-'define the proposal column range
+'define pivotDataRange
+Selection.End(xlToRight).Offset(0, -2).Select
+Range(Selection, Selection.End(xlToRight)).Select
+ActiveCell.Resize(cellCount + 1, 3).Select
+Set pivotSourceRange = Selection
+
 
 
 'define source data space
