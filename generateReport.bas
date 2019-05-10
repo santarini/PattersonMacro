@@ -4,26 +4,24 @@ Dim sourceSheet, destSheet As Worksheet
 Dim sheetNameArr As Variant
 Dim sheetNameStr As String
 
-i = 1
-For Each Sheet In Worksheets
-Set sourceSheet = ActiveSheet
-
 'create a report page
-
 Sheets.Add.Name = "Report"
 Set destSheet = ActiveSheet
 
-'sourceSheet.Activate
+i = 1
+For Each Sheet In Worksheets
 
-'for each sheet containing pivot
+If (InStr(1, Sheet.Name, "Pivot") > 0) Then
 
+'define the source sheet
+Set sourceSheet = Sheet
+
+sourceSheet.Activate
 
 'get the source page name until the word Pivot
 sheetNameArr = Split(sourceSheet.Name, "Pivot")
-
 sheetNameStr = sheetNameArr(0)
 
-'make sure it's not the first page
 'If (InStr(1, Sheet.Name, "Pivot") > 0) Then
 If IsEmpty(sourceSheet.Range("A1")) = False Then
     destSheet.Shapes.AddChart2(201, xlColumnClustered).Select
@@ -48,5 +46,6 @@ i = i + 20
 
 End If
 
+Next Sheet
 
 End Sub
