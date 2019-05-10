@@ -9,6 +9,7 @@ Dim SrcData, PvtDest As String
 Dim pvtCache As PivotCache
 Dim pvt As PivotTable
 
+i = 1
 For Each Sheet In Worksheets
 'make sure it's not the first page
 If (InStr(1, Sheet.Name, "CWPO") > 0) Or (InStr(1, Sheet.Name, "PPPS") > 0) Then
@@ -62,14 +63,13 @@ If (InStr(1, Sheet.Name, "CWPO") > 0) Then
     PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A1").Address(ReferenceStyle:=xlR1C1)
 End If
 If (InStr(1, Sheet.Name, "PPPS") > 0) Then
-    PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A5").Address(ReferenceStyle:=xlR1C1)
+    PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("F1").Address(ReferenceStyle:=xlR1C1)
 End If
 
 
 'Set pvtCache = ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData)
 'Set pvt = pvtCache.createPivotTable(TableDestination:=PvtDest, TableName:="PivotTable1")
 
-i = 1
 'define source data space
 
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData, Version:=6).createPivotTable TableDestination:=PvtDest, TableName:="PivotTable" & i, DefaultVersion:=6
@@ -116,22 +116,26 @@ i = 1
     End With
     
 'add data lines
-    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").AutoGroup
+    
 If (InStr(1, Sheet.Name, "CWPO") > 0) Then
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").AutoGroup
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Planned"), "Sum of Planned", xlSum
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Actual"), "Sum of Actual", xlSum
-End If
-If (InStr(1, Sheet.Name, "PPPS") > 0) Then
-        ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("In Progress"), "Count of In Progress", xlCount
-    ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Submitted"), "Sum of Submitted", xlSum
-End If
-
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="1/1/2020"
     ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years[All]", xlLabelOnly + xlFirstRow, True
     Selection.ShowDetail = True
+End If
+If (InStr(1, Sheet.Name, "PPPS") > 0) Then
+    'ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Months[All]", xlLabelOnly + xlFirstRow, True
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("In Progress"), "Count of In Progress", xlCount
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Submitted"), "Sum of Submitted", xlSum
+    ActiveSheet.PivotTables("PivotTable8").PivotSelect "Date[All]", xlLabelOnly + xlFirstRow, True
+    Selection.Group Start:=True, End:=True, Periods:=Array(False, False, False, False, False, True, True)
+End If
  
  End If
 
+i = i + 1
 Next Sheet
 
 End Sub
