@@ -9,9 +9,14 @@ Dim SrcData, PvtDest As String
 Dim pvtCache As PivotCache
 Dim pvt As PivotTable
 
-'if page contains CWPO
-'set as source page
+For Each Sheet In Worksheets
+If (InStr(1, Sheet.Name, "OpportunityDetails") = 0) Then
+'if page contains CWPO or PPPS
+If (InStr(1, Sheet.Name, "CWPO") > 0) Or (InStr(1, Sheet.Name, "PPPS") > 0) Then
 
+Sheet.Activate
+
+'set as source page
 'define sheet
 Set sourceSheet = ActiveSheet
 
@@ -95,13 +100,23 @@ i = 1
         .Orientation = xlRowField
         .Position = 1
     End With
+    
+'add data lines
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").AutoGroup
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Planned"), "Sum of Planned", xlSum
     ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Actual"), "Sum of Actual", xlSum
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="1/1/2020"
     ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years[All]", xlLabelOnly + xlFirstRow, True
     Selection.ShowDetail = True
-    
+ 
+ End If
 
+ 
+ If (InStr(1, Sheet.Name, "PPPS") = 0) Then
+
+End If
+
+End If
+Next Sheet
 
 End Sub
