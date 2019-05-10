@@ -24,6 +24,7 @@ sheetNameStr = sheetNameArr(0)
 
 'If (InStr(1, Sheet.Name, "Pivot") > 0) Then
 If IsEmpty(sourceSheet.Range("A1")) = False Then
+    destSheet.Activate
     destSheet.Shapes.AddChart2(201, xlColumnClustered).Select
     Application.CutCopyMode = False
     ActiveChart.SetSourceData Source:=sourceSheet.Range("A1")
@@ -34,6 +35,7 @@ If IsEmpty(sourceSheet.Range("A1")) = False Then
 'generate a graph
 End If
 If IsEmpty(sourceSheet.Range("F1")) = False Then
+    destSheet.Activate
     destSheet.Shapes.AddChart2(201, xlColumnClustered).Select
     Application.CutCopyMode = False
     ActiveChart.SetSourceData Source:=sourceSheet.Range("F1")
