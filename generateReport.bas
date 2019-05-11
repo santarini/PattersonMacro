@@ -7,6 +7,7 @@ Dim sheetNameStr As String
 'create a report page
 Sheets.Add.Name = "Report"
 Set destSheet = ActiveSheet
+destSheet.Move Before:=Sheets(2)
 
 i = 1
 For Each Sheet In Worksheets
