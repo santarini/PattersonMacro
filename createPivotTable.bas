@@ -133,7 +133,10 @@ If (InStr(1, Sheet.Name, "PPPS") > 0) Then
     Selection.Group Start:=True, End:=True, Periods:=Array(False, False, False, False, False, True, True)
 End If
  
- End If
+End If
+
+sourceSheet.Activate
+sourceSheet.Range("A1").Select
 
 i = i + 1
 Next Sheet
