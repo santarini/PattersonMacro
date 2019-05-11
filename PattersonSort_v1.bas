@@ -6,4 +6,5 @@ Sub PattersonSort()
     Call DataRecode
     Call createPivotTable
     Call generateReport
+    MsgBox "Success!", vbInformation
 End Sub
