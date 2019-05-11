@@ -32,6 +32,7 @@ If IsEmpty(sourceSheet.Range("A1")) = False Then
     ActiveChart.SetSourceData Source:=sourceSheet.Range("A1")
     ActiveChart.ChartTitle.Text = sheetNameStr & " - Planned vs. Actual"
     ActiveChart.HasLegend = True
+    ActiveChart.Axes(xlValue).TickLabels.NumberFormat = "$#,##0.00"
     ActiveChart.Parent.Cut
     Range("A" & i).Select
     ActiveSheet.Paste
@@ -44,6 +45,7 @@ If IsEmpty(sourceSheet.Range("F1")) = False Then
     ActiveChart.SetSourceData Source:=sourceSheet.Range("F1")
     ActiveChart.ChartTitle.Text = sheetNameStr & " - In Progress vs Submitted"
     ActiveChart.HasLegend = True
+    ActiveChart.Axes(xlValue).TickLabels.NumberFormat = "$#,##0.00"
     ActiveChart.Parent.Cut
     Range("J" & i).Select
     ActiveSheet.Paste
