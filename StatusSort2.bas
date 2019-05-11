@@ -236,7 +236,6 @@ For Each cell In proposalColumn
     End If
     
 Next cell
-sourceSheet.Range("A1").Select
 End If
 End If
 End If
