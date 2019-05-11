@@ -9,6 +9,7 @@ Sheets.Add.Name = "Report"
 Set destSheet = ActiveSheet
 destSheet.Move Before:=Sheets(2)
 
+
 i = 1
 For Each Sheet In Worksheets
 
@@ -30,6 +31,7 @@ If IsEmpty(sourceSheet.Range("A1")) = False Then
     Application.CutCopyMode = False
     ActiveChart.SetSourceData Source:=sourceSheet.Range("A1")
     ActiveChart.ChartTitle.Text = sheetNameStr & " - Planned vs. Actual"
+    ActiveChart.HasLegend = True
     ActiveChart.Parent.Cut
     Range("A" & i).Select
     ActiveSheet.Paste
@@ -41,6 +43,7 @@ If IsEmpty(sourceSheet.Range("F1")) = False Then
     Application.CutCopyMode = False
     ActiveChart.SetSourceData Source:=sourceSheet.Range("F1")
     ActiveChart.ChartTitle.Text = sheetNameStr & " - In Progress vs Submitted"
+    ActiveChart.HasLegend = True
     ActiveChart.Parent.Cut
     Range("J" & i).Select
     ActiveSheet.Paste
@@ -50,5 +53,6 @@ i = i + 20
 End If
 
 Next Sheet
+destSheet.Range("A1").Select
 
 End Sub
