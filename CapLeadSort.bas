@@ -36,12 +36,34 @@ Sub CapLeadSort()
 
 Dim cell, titleRng As Range
 Dim PMOrng, CYBERrng, TRAINrng, HEALTHrng, EMrng, IMSrng, AMrng As Range
+Dim sourceRng, CapLeadCol As Range
+Dim cellCount As Integer
 
-Dim StartTime As Double
-Dim SecondsElapsed As Double
-StartTime = Timer
+Set sourceSheet = Sheets("OpportunityDetails")
+
+sourceSheet.Activate
 
 'find the cell with "Dawson Capture Lead"
+Set sourceRng = Cells.Find(What:="Dawson Capture Lead", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
+
+'select all rows beneath it
+Range(Selection, Selection.End(xlDown)).Select
+cellCount = Selection.Rows.Count
+Set CapLeadCol = Selection
+
+sourceRng.Select
+
+For Each cell In CapLeadCol
+'if tab doesn't exist create one
+If sheetExists(cell.Value) = False Then
+'create sheet
+'else
+Else
+    Set destSheet = Sheets(cell.Value)
+End If
+sourceSheet.Activate
+
+Next cell
 
 'copy main header
 Sheets("OpportunityDetails").Activate
@@ -240,5 +262,3 @@ SecondsElapsed = Round(Timer - StartTime, 2)
 'MsgBox i & " data points successfully sorted from " & cellCount & " in " & SecondsElapsed & " seconds", vbInformation
 
 End Sub
-
-
