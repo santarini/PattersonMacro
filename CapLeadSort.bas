@@ -1,4 +1,4 @@
-Sub SalesPersonSort()
+Sub CapLeadSort()
 
 ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ '
 ' (c) Makoa Santarini - https://github.com/santarini/PattersonMacro
