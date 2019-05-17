@@ -34,233 +34,152 @@ Sub ServiceLineSort()
 ' SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ '
 
+'The first sort should be by the four PTS Service Lines that currently exist in the database in the Service Line column
+'(Readiness & Response, National Security, Logistics, IT/Cyber), not by the prefixes in the titles.
+'We now want to use what is in the system without having to do that ‘title sort’ first.
+'Then we will sort by the names in the “Dawson Capture Lead” column once that initial sort is done.
+
 Dim cell, titleRng As Range
-Dim PMOrng, CYBERrng, TRAINrng, HEALTHrng, EMrng, IMSrng, AMrng As Range
-Dim sourceRng, CapLeadCol As Range
+Dim sourceRng, ServiceLineCol As Range
 Dim cellCount As Integer
 
+'define the main source page
 Set sourceSheet = Sheets("OpportunityDetails")
 
+'Naviage to source sheet
 sourceSheet.Activate
 
-'find the cell with "Service Line"
-Set sourceRng = Cells.Find(What:="Service Line", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False)
-
-'select all rows beneath it
-Range(Selection, Selection.End(xlDown)).Select
-cellCount = Selection.Rows.Count
-Set CapLeadCol = Selection
-
-sourceRng.Select
-
-For Each cell In CapLeadCol
-'if tab doesn't exist create one
-If sheetExists(cell.Value) = False Then
-'create sheet
-'else
-Else
-    Set destSheet = Sheets(cell.Value)
-End If
-sourceSheet.Activate
-
-Next cell
-
-'copy main header
-Sheets("OpportunityDetails").Activate
+'copy header from source sheet
 Range("A1").Select
 Range(Selection, Selection.End(xlToRight)).Select
 Selection.Copy
+Range("A1").Select
 
-'create tabs
-
-Sheets.Add.Name = "PMO Support"
-Set PMOrng = Sheets("PMO Support").Range("A1")
+'create and define service line tabs with header and define working ranges
+'Readiness & Response
+Sheets.Add.Name = "ReadyResp"
+Set readyRespSheet = Sheets("ReadyResp")
+readyRespSheet.Activate
+readyRespSheet.Range("A1").Select
 ActiveSheet.Paste
-Set PMOrng = Sheets("PMO Support").Range("A2")
+Set readyRespRng = readyRespSheet.Range("A2")
+readyRespRng.Select
 
-Sheets.Add.Name = "Cyber-Intel"
-Set CYBERrng = Sheets("Cyber-Intel").Range("A1")
-ActiveSheet.Paste
-Set CYBERrng = Sheets("Cyber-Intel").Range("A2")
+'National Security
+Sheets.Add.Name = "NatSec"
+Set natSecSheet = Sheets("NatSec")
+natSecSheet.Activate
+natSecSheet.Range("A1").Select
+natSecSheet.Paste
+Set natSecRng = natSecSheet.Range("A2")
+natSecRng.Select
 
-Sheets.Add.Name = "Training"
-Set TRAINrng = Sheets("Training").Range("A1")
-ActiveSheet.Paste
-Set TRAINrng = Sheets("Training").Range("A2")
+'Logistics
+Sheets.Add.Name = "Logistics"
+Set logisticsSheet = Sheets("Logistics")
+logisticsSheet.Activate
+logisticsSheet.Range("A1").Select
+logisticsSheet.Paste
+Set logisticsRng = logisticsSheet.Range("A2")
+logisticsRng.Select
 
-Sheets.Add.Name = "Federal Health"
-Set HEALTHrng = Sheets("Federal Health").Range("A1")
-ActiveSheet.Paste
-Set HEALTHrng = Sheets("Federal Health").Range("A2")
+'IT/Cyber
+Sheets.Add.Name = "IT_Cyber"
+Set IT_CyberSheet = Sheets("IT_Cyber")
+IT_CyberSheet.Activate
+IT_CyberSheet.Range("A1").Select
+IT_CyberSheet.Paste
+Set IT_CyberRng = IT_CyberSheet.Range("A2")
+IT_CyberRng.Select
 
-Sheets.Add.Name = "CBRNE"
-Set EMrng = Sheets("CBRNE").Range("A1")
-ActiveSheet.Paste
-Set EMrng = Sheets("CBRNE").Range("A2")
+'Naviage back to source sheet
+sourceSheet.Activate
 
-Sheets.Add.Name = "Inst Mission Spt"
-Set IMSrng = Sheets("Inst Mission Spt").Range("A1")
-ActiveSheet.Paste
-Set IMSrng = Sheets("Inst Mission Spt").Range("A2")
+'find the cell with "Service Line"
+Cells.Find(What:="Service Line", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Select
 
-Sheets.Add.Name = "Asset Mgmt"
-Set AMrng = Sheets("Asset Mgmt").Range("A1")
-ActiveSheet.Paste
-Set AMrng = Sheets("Asset Mgmt").Range("A2")
+'select all rows beneath it
+Range(Selection, Selection.End(xlDown)).Offset(1, 0).Select
+'cellCount = Selection.Rows.Count
+Set ServiceLineCol = Selection
 
-'Identify aggregate opportunity list
-Sheets("OpportunityDetails").Activate
-
-'find cell containing "Title"
-Cells.Find(What:="Title", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Offset(1, 0).Select
-
-'select all rows in Title column
-Range(Selection, Selection.End(xlDown)).Select
-cellCount = Selection.Rows.Count
-Set titleRng = Selection
-
-i = 0
-For Each cell In titleRng
-'sort for PMO
-    If InStr(1, cell.Value, "PMO -") > 0 Then
-        'MsgBox cell.Value
-        Sheets("OpportunityDetails").Activate
+For Each cell In ServiceLineCol
+   'sort for Readiness & Response
+    If InStr(1, cell.Value, "Readiness & Response") > 0 Then
+        sourceSheet.Activate
         cell.Select
         Selection.End(xlToLeft).Select
         ActiveCell.Resize(1, 70).Copy
-        Sheets("PMO Support").Activate
-        PMOrng.Select
+        readyRespSheet.Activate
+        readyRespRng.Select
         ActiveSheet.Paste
-        PMOrng.Offset(1, 0).Select
-        Set PMOrng = Selection
+        readyRespRng.Offset(1, 0).Select
+        Set readyRespRng = Selection
         i = i + 1
     End If
     
-    
-'sort for Cyber
-    If InStr(1, cell.Value, "IT_Cyber - ") > 0 Then
-        'MsgBox cell.Value
-        Sheets("OpportunityDetails").Activate
+    'sort for National Security
+    If InStr(1, cell.Value, "National Security") > 0 Then
+        sourceSheet.Activate
         cell.Select
         Selection.End(xlToLeft).Select
         ActiveCell.Resize(1, 70).Copy
-        Sheets("Cyber-Intel").Activate
-        CYBERrng.Select
+        natSecSheet.Activate
+        natSecRng.Select
         ActiveSheet.Paste
-        CYBERrng.Offset(1, 0).Select
-        Set CYBERrng = Selection
+        natSecRng.Offset(1, 0).Select
+        Set natSecRng = Selection
         i = i + 1
-    End If
+     End If
     
-'sort for Training
-    If InStr(1, cell.Value, "Training - ") > 0 Then
-        'MsgBox cell.Value
-        Sheets("OpportunityDetails").Activate
+    'sort for Logistics
+    If InStr(1, cell.Value, "Logistics") > 0 Then
+        sourceSheet.Activate
         cell.Select
         Selection.End(xlToLeft).Select
         ActiveCell.Resize(1, 70).Copy
-        Sheets("Training").Activate
-        TRAINrng.Select
+        logisticsSheet.Activate
+        logisticsRng.Select
         ActiveSheet.Paste
-        TRAINrng.Offset(1, 0).Select
-        Set TRAINrng = Selection
+        logisticsRng.Offset(1, 0).Select
+        Set logisticsRng = Selection
         i = i + 1
     End If
     
-'sort for Health SVS
-    If InStr(1, cell.Value, "Health Svs - ") > 0 Then
-        'MsgBox cell.Value
-        Sheets("OpportunityDetails").Activate
+    'sort for IT/Cyber
+    If InStr(1, cell.Value, "IT/Cyber") > 0 Then
+        sourceSheet.Activate
         cell.Select
         Selection.End(xlToLeft).Select
         ActiveCell.Resize(1, 70).Copy
-        Sheets("Federal Health").Activate
-        HEALTHrng.Select
+        IT_CyberSheet.Activate
+        IT_CyberRng.Select
         ActiveSheet.Paste
-        HEALTHrng.Offset(1, 0).Select
-        Set HEALTHrng = Selection
+        IT_CyberRng.Offset(1, 0).Select
+        Set IT_CyberRng = Selection
         i = i + 1
     End If
-
-'sort for EM
-    If InStr(1, cell.Value, "EM-CBRNE -") > 0 Then
-        'MsgBox cell.Value
-        Sheets("OpportunityDetails").Activate
-        cell.Select
-        Selection.End(xlToLeft).Select
-        ActiveCell.Resize(1, 70).Copy
-        Sheets("CBRNE").Activate
-        EMrng.Select
-        ActiveSheet.Paste
-        EMrng.Offset(1, 0).Select
-        Set EMrng = Selection
-        i = i + 1
-    End If
-    
-'sort for IMS
-    If InStr(1, cell.Value, "IMS -") > 0 Then
-        'MsgBox cell.Value
-        Sheets("OpportunityDetails").Activate
-        cell.Select
-        Selection.End(xlToLeft).Select
-        ActiveCell.Resize(1, 70).Copy
-        Sheets("Inst Mission Spt").Activate
-        IMSrng.Select
-        ActiveSheet.Paste
-        IMSrng.Offset(1, 0).Select
-        Set IMSrng = Selection
-        i = i + 1
-    End If
-
-'sort for AM
-    If InStr(1, cell.Value, "AM -") > 0 Then
-        'MsgBox cell.Value
-        Sheets("OpportunityDetails").Activate
-        cell.Select
-        Selection.End(xlToLeft).Select
-        ActiveCell.Resize(1, 70).Copy
-        Sheets("Asset Mgmt").Activate
-        AMrng.Select
-        ActiveSheet.Paste
-        AMrng.Offset(1, 0).Select
-        Set AMrng = Selection
-        i = i + 1
-    End If
-
 Next cell
 
 'clean up
+'Readiness & Response
+readyRespSheet.Activate
+readyRespSheet.Range("A1").Select
 
-Sheets("PMO Support").Activate
-Range("A1").Select
+'National Security
+natSecSheet.Activate
+natSecSheet.Range("A1").Select
 
-Sheets("Cyber-Intel").Activate
-Range("A1").Select
+'Logistics
+logisticsSheet.Activate
+logisticsSheet.Range("A1").Select
 
-Sheets("Training").Activate
-Range("A1").Select
+'IT/Cyber
+IT_CyberSheet.Activate
+IT_CyberSheet.Range("A1").Select
 
-Sheets("Federal Health").Activate
-Range("A1").Select
-
-Sheets("CBRNE").Activate
-Range("A1").Select
-
-Sheets("Inst Mission Spt").Activate
-Range("A1").Select
-
-Sheets("Asset Mgmt").Activate
-Range("A1").Select
-
-Sheets("OpportunityDetails").Activate
-Range("A1").Select
-ActiveSheet.Move Before:=ActiveWorkbook.Sheets(1)
-
-'present summary statistics
-
-SecondsElapsed = Round(Timer - StartTime, 2)
-'MsgBox i & " data points successfully sorted from " & cellCount & " in " & SecondsElapsed & " seconds", vbInformation
+'source Sheet
+sourceSheet.Activate
+sourceSheet.Range("A1").Select
 
 End Sub
-
-
