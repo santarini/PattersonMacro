@@ -1,4 +1,4 @@
-Sub PattersonSort()
+Sub ServiceSortMain()
     Call CatSort
     Call StatusSort
     Call DateValidator
