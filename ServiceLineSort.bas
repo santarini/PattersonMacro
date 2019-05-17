@@ -108,7 +108,7 @@ For Each cell In ServiceLineCol
     If InStr(1, cell.Value, "Readiness & Response") > 0 Then
         sourceSheet.Activate
         cell.Select
-        Selection.End(xlToLeft).Select
+        Selection.Offset(0, -13).Select
         ActiveCell.Resize(1, 70).Copy
         readyRespSheet.Activate
         readyRespRng.Select
@@ -122,7 +122,7 @@ For Each cell In ServiceLineCol
     If InStr(1, cell.Value, "National Security") > 0 Then
         sourceSheet.Activate
         cell.Select
-        Selection.End(xlToLeft).Select
+        Selection.Offset(0, -13).Select
         ActiveCell.Resize(1, 70).Copy
         natSecSheet.Activate
         natSecRng.Select
@@ -136,7 +136,7 @@ For Each cell In ServiceLineCol
     If InStr(1, cell.Value, "Logistics") > 0 Then
         sourceSheet.Activate
         cell.Select
-        Selection.End(xlToLeft).Select
+        Selection.Offset(0, -13).Select
         ActiveCell.Resize(1, 70).Copy
         logisticsSheet.Activate
         logisticsRng.Select
@@ -150,7 +150,7 @@ For Each cell In ServiceLineCol
     If InStr(1, cell.Value, "IT/Cyber") > 0 Then
         sourceSheet.Activate
         cell.Select
-        Selection.End(xlToLeft).Select
+        Selection.Offset(0, -13).Select
         ActiveCell.Resize(1, 70).Copy
         IT_CyberSheet.Activate
         IT_CyberRng.Select
@@ -181,5 +181,7 @@ IT_CyberSheet.Range("A1").Select
 'source Sheet
 sourceSheet.Activate
 sourceSheet.Range("A1").Select
+
+
 
 End Sub
