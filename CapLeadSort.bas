@@ -46,20 +46,13 @@ Dim cellCount As Integer
 'set source sheet
 Set sourceSheet = ActiveSheet
 
-'find the cell with "Service Line"
-Cells.Find(What:="Service Line", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Select
-
-'select all rows beneath it
-Range(Selection, Selection.End(xlDown)).Offset(1, 0).Select
-cellCount = Selection.Rows.Count
-Selection.Resize(cellCount - 1, 1).Select
-
 'find cell with "Dawson Capture Lead"
 Cells.Find(What:="Dawson Capture Lead", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Select
 
 'select all rows beneath it
-Selection.Offset(1, 0).Select
-Selection.Resize(cellCount - 1, 1).Select
+Range(Selection, Selection.End(xlDown)).Offset(1, 0).Select
+cellCount = Selection.Rows.Count
+ActiveCell.Resize(cellCount - 1, 1).Select
 Set CapLeadCol = Selection
 
 For Each cell In CapLeadCol
