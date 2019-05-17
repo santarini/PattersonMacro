@@ -42,17 +42,73 @@ Dim cellCount As Integer
 
 'for each sheet in workbook
 'if sheet is not "OpportunityDetials
+
 'set source sheet
-'get source sheet name
+Set sourceSheet = ActiveSheet
+
+'find the cell with "Service Line"
+Cells.Find(What:="Service Line", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Select
+
+'select all rows beneath it
+Range(Selection, Selection.End(xlDown)).Offset(1, 0).Select
+cellCount = Selection.Rows.Count
+Selection.Resize(cellCount - 1, 1).Select
+
 'find cell with "Dawson Capture Lead"
-'define Capture lead col
-'for each cell in capture lead col
+Cells.Find(What:="Dawson Capture Lead", After:=ActiveCell, LookIn:=xlFormulas, LookAt:=xlWhole, SearchOrder:=xlByRows, SearchDirection:=xlNext, MatchCase:=True, SearchFormat:=False).Select
+
+'select all rows beneath it
+Selection.Offset(1, 0).Select
+Selection.Resize(cellCount - 1, 1).Select
+Set CapLeadCol = Selection
+
+For Each cell In CapLeadCol
+captureLeadName = cell.Value
 'create captureLeadSerial
 captureLeadFirstInital = Left(captureLeadName, 1)
 captureLeadSpaceArray = Split(captureLeadName, " ")
-captureLeadSerial = captureLeadFirstInital & captureLeadSpaceArray(UBound(captureLeadSpaceArray))
+captureLeadSerial = captureLeadFirstInital & Left(captureLeadSpaceArray(UBound(captureLeadSpaceArray)), 4)
+
 'check to see if sheet exists whose name is source sheet name + captureLeadSerial
 'if doens't exist create it and define it
-'if it does exist copy entire row and paste row into that sheet
-        
+If sheetExists(sourceSheet.Name & " " & captureLeadSerial) = False Then
+            'activate the source sheet
+            sourceSheet.Activate
+            'take the header from the source sheet
+            sourceSheet.Range("A1:AY1").Copy
+            'create the dest sheet
+            Sheets.Add.Name = sourceSheet.Name & " " & captureLeadSerial
+            'define the dest sheet
+            Set destSheet = Sheets(sourceSheet.Name & " " & captureLeadSerial)
+            'define a rng in the dest sheet
+            destSheet.Range("A1").Select
+            'paste the header at the rng
+            ActiveSheet.Paste
+        Else
+        'if it does exist copy entire row and paste row into that sheet
+            Set destSheet = Sheets(sourceSheet.Name & " " & captureLeadSerial)
+        End If
+        'activate source sheet
+        sourceSheet.Activate
+        'get cell
+        cell.Offset(0, -7).Activate
+        'get entire row, copy
+        ActiveCell.Resize(1, 70).Copy
+        'go to destination sheet
+        destSheet.Activate
+        'select A1
+        destSheet.Range("A1").Select
+        'if A2 is blank select A
+        If IsEmpty(Range("A2")) = True Then
+            destSheet.Range("A2").Select
+        Else
+            'go to the bottom of the data + 1
+            Selection.End(xlDown).Offset(1, 0).Select
+        End If
+        'paste
+        ActiveSheet.Paste
+        'clean up
+        ActiveSheet.Range("A1").Select
+Next cell
+
 End Sub
