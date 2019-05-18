@@ -49,6 +49,29 @@ Set sourceSheet = Sheets("OpportunityDetails")
 'Naviage to source sheet
 sourceSheet.Activate
 
+Sheets.Add.Name = "OppDetCopy"
+Set oppDetailsFiltered = Sheets("OppDetCopy")
+
+sourceSheet.Activate
+Selection.AutoFilter
+ActiveSheet.ListObjects("Data").Range.AutoFilter Field:=1, Criteria1:=Array("Closed Won", "Pipeline Opportunity", "Proposal In Progress", "Proposal Submitted"), Operator:=xlFilterValues
+Range("A1").Select
+
+'Select to bottom
+Range(Selection, Selection.End(xlDown)).Select
+RowCount = Selection.Rows.Count
+
+'resize selection
+ActiveCell.Resize(RowCount, 70).Select
+Selection.SpecialCells(xlCellTypeVisible).Select
+Selection.Copy
+
+'NavigateToNewSheet
+oppDetailsFiltered.Activate
+ActiveSheet.Paste
+
+Set sourceSheet = Sheets("OppDetCopy")
+
 'copy header from source sheet
 Range("A1").Select
 Range(Selection, Selection.End(xlToRight)).Select
@@ -57,8 +80,8 @@ Range("A1").Select
 
 'create and define service line tabs with header and define working ranges
 'Readiness & Response
-Sheets.Add.Name = "ReadyResp"
-Set readyRespSheet = Sheets("ReadyResp")
+Sheets.Add.Name = "ReadyResp CWPO"
+Set readyRespSheet = Sheets("ReadyResp CWPO")
 readyRespSheet.Activate
 readyRespSheet.Range("A1").Select
 ActiveSheet.Paste
@@ -66,8 +89,8 @@ Set readyRespRng = readyRespSheet.Range("A2")
 readyRespRng.Select
 
 'National Security
-Sheets.Add.Name = "NatSec"
-Set natSecSheet = Sheets("NatSec")
+Sheets.Add.Name = "NatSec CWPO"
+Set natSecSheet = Sheets("NatSec CWPO")
 natSecSheet.Activate
 natSecSheet.Range("A1").Select
 natSecSheet.Paste
@@ -75,8 +98,8 @@ Set natSecRng = natSecSheet.Range("A2")
 natSecRng.Select
 
 'Logistics
-Sheets.Add.Name = "Logistics"
-Set logisticsSheet = Sheets("Logistics")
+Sheets.Add.Name = "Logistics CWPO"
+Set logisticsSheet = Sheets("Logistics CWPO")
 logisticsSheet.Activate
 logisticsSheet.Range("A1").Select
 logisticsSheet.Paste
@@ -84,8 +107,8 @@ Set logisticsRng = logisticsSheet.Range("A2")
 logisticsRng.Select
 
 'IT/Cyber
-Sheets.Add.Name = "IT_Cyber"
-Set IT_CyberSheet = Sheets("IT_Cyber")
+Sheets.Add.Name = "IT_Cyber CWPO"
+Set IT_CyberSheet = Sheets("IT_Cyber CWPO")
 IT_CyberSheet.Activate
 IT_CyberSheet.Range("A1").Select
 IT_CyberSheet.Paste
@@ -160,6 +183,9 @@ For Each cell In ServiceLineCol
         i = i + 1
     End If
 Next cell
+
+'filter out contract statuses
+
 
 'clean up
 'Readiness & Response
