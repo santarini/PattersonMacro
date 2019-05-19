@@ -1,7 +1,7 @@
-Sub Test1()
+Sub UniqueNames()
 
 Dim cellCount As Integer
-Dim arr As New Collection, a
+Dim uniqName As New Collection, a
 Dim allNames() As Variant
 Dim i As Long
 
@@ -19,13 +19,11 @@ Next cell
 
 On Error Resume Next
 For Each a In allNames
-   arr.Add a, a
+   uniqName.Add a, a
 Next
 
-For i = 1 To arr.Count
-    Cells(i, 2) = arr(i)
+For i = 1 To uniqName.Count
+    Cells(i, 2) = uniqName(i)
 Next
-
-
 
 End Sub
