@@ -22,15 +22,8 @@ For Each a In aFirstArray
    arr.Add a, a
 Next
 
-ReDim uniqueNames(1 To cellCount) As Variant
-
 For i = 1 To arr.Count
-   uniqueNames(i) = arr(i)
+    Cells(i, 2) = arr(i)
 Next
-
-batch = Join(uniqueNames, ",")
-
-MsgBox batch
-
 
 End Sub
