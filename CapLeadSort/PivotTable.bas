@@ -71,7 +71,7 @@ destSheet.Range("A1").Select
 i = 1
 For i = 1 To uniqName.Count
     'Cells((i * 15) - 14, 1) = uniqName(i)
-    PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A" & ((i * 15) - 13)).Address(ReferenceStyle:=xlR1C1)
+    PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A" & ((i * 20) - 18)).Address(ReferenceStyle:=xlR1C1)
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData, Version:=6).CreatePivotTable TableDestination:=PvtDest, TableName:="PivotTable" & i, DefaultVersion:=6
     destSheet.Activate
     With ActiveSheet.PivotTables("PivotTable" & i)
@@ -124,12 +124,12 @@ For i = 1 To uniqName.Count
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").Position = 1
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").ClearAllFilters
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").CurrentPage = uniqName(i)
-    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="1/1/2020"
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="12/31/2019"
     ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years2[All]", xlLabelOnly + xlFirstRow, True
     Selection.ShowDetail = True
 
 'for each pivot table in pivot page
-destSheet.Range("A" & ((i * 15) - 12)).Select
+destSheet.Range("A" & ((i * 20) - 17)).Select
 destSheet.Shapes.AddChart2(201, xlColumnClustered).Select
 Application.CutCopyMode = False
 ActiveChart.HasTitle = True
@@ -143,8 +143,12 @@ ActiveSheet.Paste
 
 Next i
 
-End If
+'clear allNames array
+ReDim allNames(0)
+'clear unique names
+Set uniqName = Nothing
 
+End If
 Next Sheet
 
 End Sub
