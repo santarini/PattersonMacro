@@ -125,7 +125,7 @@ For i = 1 To uniqName.Count
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").ClearAllFilters
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").CurrentPage = uniqName(i)
     ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="1/1/2020"
-    ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years[All]", xlLabelOnly + xlFirstRow, True
+    ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years2[All]", xlLabelOnly + xlFirstRow, True
     Selection.ShowDetail = True
 
 'for each pivot table in pivot page
