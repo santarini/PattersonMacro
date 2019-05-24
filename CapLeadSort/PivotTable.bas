@@ -9,9 +9,10 @@ Dim i As Long
 
 'for each sheet ending in CWPO
 For Each Sheet In Worksheets
-If (InStr(1, sourceSheet.Name, "CWPO") > 0) Then
 
-Set sourceSheet = ActiveSheet
+If (InStr(1, Sheet.Name, "CWPO") > 0) Then
+
+Set sourceSheet = Sheet
 
 
 sheetNameStr = Split(sourceSheet.Name, "CWPO")
@@ -24,6 +25,10 @@ Else
     'if it does exist re-define it
     Set destSheet = Sheets(sheetNameStr(0) & "Pivot")
 End If
+
+'create Report page
+Sheets.Add.Name = sheetNameStr(0) & "Report"
+Set reportSheet = ActiveSheet
 
 sourceSheet.Activate
 
@@ -123,11 +128,24 @@ For i = 1 To uniqName.Count
     ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years[All]", xlLabelOnly + xlFirstRow, True
     Selection.ShowDetail = True
 
-Next i
+'for each pivot table in pivot page
+destSheet.Range("A" & ((i * 15) - 12)).Select
+destSheet.Shapes.AddChart2(201, xlColumnClustered).Select
+Application.CutCopyMode = False
+ActiveChart.HasTitle = True
+ActiveChart.ChartTitle.Text = uniqName(i)
+ActiveChart.HasLegend = True
+ActiveChart.Axes(xlValue).TickLabels.NumberFormat = "$#,##0"
+ActiveChart.Parent.Cut
+reportSheet.Activate
+Range("A" & (i * 15) - 14).Select
+ActiveSheet.Paste
 
+Next i
 
 End If
 
+Next Sheet
 
 End Sub
 Function sheetExists(sheetToFind As String) As Boolean
