@@ -34,7 +34,9 @@ sourceRng.Select
 Range(Selection, Selection.End(xlToRight)).Select
 colCount = Selection.Columns.Count
 sourceRng.Resize(RowCount, colCount).Select
-Set pivotSource = Selection
+Set pivotSourceRange = Selection
+SrcData = "'" & sourceSheet.Name & "'!" & pivotSourceRange.Address(ReferenceStyle:=xlR1C1)
+sourceSheet.Range("A1").Select
 
 'get all the unique names
 'find the cell with "Dawson Capture Lead"
@@ -57,6 +59,70 @@ Next
 
 'insert pivot tables
 destSheet.Activate
+destSheet.Range("A1").Select
+
+i = 1
+For i = 1 To uniqName.Count
+    'Cells((i * 15) - 14, 1) = uniqName(i)
+    PvtDest = "'" & destSheet.Name & "'!" & destSheet.Range("A" & ((i * 15) - 13)).Address(ReferenceStyle:=xlR1C1)
+    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:=SrcData, Version:=6).CreatePivotTable TableDestination:=PvtDest, TableName:="PivotTable" & i, DefaultVersion:=6
+    destSheet.Activate
+    With ActiveSheet.PivotTables("PivotTable" & i)
+        .ColumnGrand = True
+        .HasAutoFormat = True
+        .DisplayErrorString = False
+        .DisplayNullString = True
+        .EnableDrilldown = True
+        .ErrorString = ""
+        .MergeLabels = False
+        .NullString = ""
+        .PageFieldOrder = 2
+        .PageFieldWrapCount = 0
+        .PreserveFormatting = True
+        .RowGrand = True
+        .SaveData = True
+        .PrintTitles = False
+        .RepeatItemsOnEachPrintedPage = True
+        .TotalsAnnotation = False
+        .CompactRowIndent = 1
+        .InGridDropZones = False
+        .DisplayFieldCaptions = True
+        .DisplayMemberPropertyTooltips = False
+        .DisplayContextTooltips = True
+        .ShowDrillIndicators = True
+        .PrintDrillIndicators = False
+        .AllowMultipleFilters = False
+        .SortUsingCustomLists = True
+        .FieldListSortAscending = False
+        .ShowValuesRow = False
+        .CalculatedMembersInFilters = False
+        .RowAxisLayout xlCompactRow
+    End With
+    With ActiveSheet.PivotTables("PivotTable" & i).PivotCache
+        .RefreshOnFileOpen = False
+        .MissingItemsLimit = xlMissingItemsDefault
+    End With
+    ActiveSheet.PivotTables("PivotTable" & i).RepeatAllLabels xlRepeatLabels
+    With ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date")
+        .Orientation = xlRowField
+        .Position = 1
+    End With
+    
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").AutoGroup
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Planned"), "Sum of Planned", xlSum
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Actual"), "Sum of Actual", xlSum
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("In Progress"), "Sum of In Progress", xlSum
+    ActiveSheet.PivotTables("PivotTable" & i).AddDataField ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Submitted"), "Sum of Submitted", xlSum
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").Orientation = xlPageField
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").Position = 1
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").ClearAllFilters
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Dawson Capture Lead").CurrentPage = uniqName(i)
+    ActiveSheet.PivotTables("PivotTable" & i).PivotFields("Date").PivotFilters.Add2 Type:=xlDateBetween, Value1:="12/31/2017", Value2:="1/1/2020"
+    ActiveSheet.PivotTables("PivotTable" & i).PivotSelect "Years[All]", xlLabelOnly + xlFirstRow, True
+    Selection.ShowDetail = True
+
+Next i
+
 
 
 
