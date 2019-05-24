@@ -8,11 +8,13 @@ Dim i As Long
 
 
 'for each sheet ending in CWPO
+For Each Sheet In Worksheets
+If (InStr(1, sourceSheet.Name, "CWPO") > 0) Then
+
 Set sourceSheet = ActiveSheet
 
-If (InStr(1, sourceSheet.Name, "CWPO") > 0) Then
-    sheetNameStr = Split(sourceSheet.Name, "CWPO")
-End If
+
+sheetNameStr = Split(sourceSheet.Name, "CWPO")
 
 'if it doeset not already exists, create new result page whose name is sourcePage.name Pivot CWPO
 If sheetExists(sheetNameStr(0) & "Pivot") = False Then
@@ -124,6 +126,7 @@ For i = 1 To uniqName.Count
 Next i
 
 
+End If
 
 
 End Sub
